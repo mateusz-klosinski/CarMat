@@ -8,9 +8,10 @@ using CarMat.Models;
 namespace CarMat.Migrations
 {
     [DbContext(typeof(CMContext))]
-    partial class CMContextModelSnapshot : ModelSnapshot
+    [Migration("20161028112628_VehicleAndVehicleEquipmentManyToManyRelationship")]
+    partial class VehicleAndVehicleEquipmentManyToManyRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")

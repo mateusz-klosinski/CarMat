@@ -20,6 +20,7 @@ namespace CarMat.Models
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleBrand> VehicleBrands { get; set; }
         public DbSet<VehicleModel> VehicleModels { get; set; }
+        public DbSet<VehicleEquipment> VehicleEquipments { get; set; }
 
 
 
@@ -45,6 +46,9 @@ namespace CarMat.Models
                 .HasOne(o => o.User)
                 .WithMany(u => u.Offers)
                 .IsRequired();
+
+            modelBuilder.Entity<VehicleVehicleEquipment>()
+                .HasKey(vve => new { vve.VehicleId, vve.EquipmentId });
         }
 
     }

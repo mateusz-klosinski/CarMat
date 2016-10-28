@@ -1,4 +1,6 @@
-﻿namespace CarMat.Models
+﻿using System.Collections.Generic;
+
+namespace CarMat.Models
 {
     public class Vehicle
     {
@@ -22,6 +24,6 @@
 
         public VehicleModel Model { get; set; }
 
-        public VehicleEquipment Equipment { get; set; }
+        public ICollection<VehicleVehicleEquipment> VehicleVehicleEquipment { get; set; }
     }
 }
