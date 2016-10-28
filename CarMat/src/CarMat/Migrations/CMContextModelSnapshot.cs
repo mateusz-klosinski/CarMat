@@ -76,9 +76,11 @@ namespace CarMat.Migrations
 
                     b.Property<string>("City");
 
-                    b.Property<string>("Province");
+                    b.Property<int>("ProvinceId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProvinceId");
 
                     b.ToTable("Demographics");
                 });
@@ -94,13 +96,85 @@ namespace CarMat.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("Title");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Offers");
+                });
+
+            modelBuilder.Entity("CarMat.Models.Province", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Provinces");
+                });
+
+            modelBuilder.Entity("CarMat.Models.Vehicle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EngineCapacity");
+
+                    b.Property<int>("Mileage");
+
+                    b.Property<int>("ModelId");
+
+                    b.Property<int>("OfferId");
+
+                    b.Property<int>("ProductionYear");
+
+                    b.Property<bool>("isDamaged");
+
+                    b.Property<bool>("isRegistered");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModelId");
+
+                    b.HasIndex("OfferId")
+                        .IsUnique();
+
+                    b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("CarMat.Models.VehicleBrand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VehicleBrands");
+                });
+
+            modelBuilder.Entity("CarMat.Models.VehicleModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BrandId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.ToTable("VehicleModels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -218,11 +292,41 @@ namespace CarMat.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("CarMat.Models.Demographics", b =>
+                {
+                    b.HasOne("CarMat.Models.Province", "Province")
+                        .WithMany("Demographics")
+                        .HasForeignKey("ProvinceId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("CarMat.Models.Offer", b =>
                 {
                     b.HasOne("CarMat.Models.CMUser", "User")
                         .WithMany("Offers")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CarMat.Models.Vehicle", b =>
+                {
+                    b.HasOne("CarMat.Models.VehicleModel", "Model")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CarMat.Models.Offer", "Offer")
+                        .WithOne("Vehicle")
+                        .HasForeignKey("CarMat.Models.Vehicle", "OfferId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CarMat.Models.VehicleModel", b =>
+                {
+                    b.HasOne("CarMat.Models.VehicleBrand", "Brand")
+                        .WithMany("Models")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

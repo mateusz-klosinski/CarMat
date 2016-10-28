@@ -15,8 +15,11 @@ namespace CarMat.Models
 
 
         public DbSet<Offer> Offers { get; set; }
+        public DbSet<Province> Provinces { get; set; }
         public DbSet<Demographics> Demographics { get; set; }
-
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<VehicleBrand> VehicleBrands { get; set; }
+        public DbSet<VehicleModel> VehicleModels { get; set; }
 
 
 
@@ -36,6 +39,12 @@ namespace CarMat.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.Entity<Offer>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Offers)
+                .IsRequired();
         }
 
     }

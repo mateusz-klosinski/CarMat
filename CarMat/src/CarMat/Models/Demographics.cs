@@ -8,7 +8,9 @@ namespace CarMat.Models
 
         public string City { get; set; }
 
-        public string Province { get; set; }
+        public int ProvinceId { get; set; }
+
+        public Province Province { get; set; }
 
         public ICollection<CMUser> User { get; set; }
     }

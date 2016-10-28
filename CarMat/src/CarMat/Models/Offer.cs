@@ -10,6 +10,8 @@ namespace CarMat.Models
     {
         public int Id { get; set; }
 
+        public string Title { get; set; }
+
         public DateTime DateAdded { get; set; }
 
         public DateTime DateFinished { get; set; }
@@ -19,5 +21,7 @@ namespace CarMat.Models
         public string UserId { get; set; }
 
         public CMUser User { get; set; }
+
+        public Vehicle Vehicle { get; set; }
     }
 }
