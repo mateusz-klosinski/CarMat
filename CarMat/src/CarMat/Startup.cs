@@ -10,11 +10,15 @@ using Microsoft.Extensions.Logging;
 using CarMat.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using CarMat.Services;
+using Newtonsoft.Json.Serialization;
 
 namespace CarMat
 {
     public class Startup
     {
+        public IConfigurationRoot Configuration { get; }
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -31,7 +35,6 @@ namespace CarMat
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -40,6 +43,7 @@ namespace CarMat
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddSingleton(Configuration);
+            services.AddTransient<CarMatDataSeeder>();
 
             services.AddDbContext<CMContext>();
 
@@ -69,11 +73,16 @@ namespace CarMat
                 };
             }).AddEntityFrameworkStores<CMContext>();
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(config => 
+                {
+                    config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                }
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, CarMatDataSeeder seeder)
         {
             app.UseIdentity();
 
@@ -103,6 +112,8 @@ namespace CarMat
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            seeder.SeedData();
         }
     }
 }

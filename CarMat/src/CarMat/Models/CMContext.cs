@@ -21,6 +21,7 @@ namespace CarMat.Models
         public DbSet<VehicleBrand> VehicleBrands { get; set; }
         public DbSet<VehicleModel> VehicleModels { get; set; }
         public DbSet<VehicleEquipment> VehicleEquipments { get; set; }
+        public DbSet<VehicleVehicleEquipment> VehicleVehicleEquipment { get; set; }
 
 
 

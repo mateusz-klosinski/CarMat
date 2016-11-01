@@ -18,6 +18,8 @@ namespace CarMat.Models
 
         public decimal Price { get; set; }
 
+        public string Description { get; set; }
+
         public string UserId { get; set; }
 
         public CMUser User { get; set; }
