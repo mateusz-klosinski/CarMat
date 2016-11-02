@@ -1,5 +1,110 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    font-family: 'Lato', sans-serif;
+    position: relative;
+    padding-top: 120px;
+    font-size: 14px;
 }
 
+/* Navbar */
+
+.navbar{
+    margin-bottom: 0;
+    padding: 25px 15px;
+}
+
+.navbar-default {
+    background-color: #dcdcdc;
+    border-color: #95ceef;
+}
+
+/* Navbar logo */
+
+.navbar .navbar-brand{
+    height: auto;
+    width: auto;
+    padding: 0;
+    position: relative;
+    color: #4c6269;
+    transition: color 0.5s;
+}
+
+.navbar .navbar-brand:hover{
+    color:#0088b3;
+}
+
+.navbar .navbar-brand i{
+    transition: opacity 0.5s;
+}
+
+.navbar .navbar-brand div{
+    position: absolute;
+    top: 0;
+    left: 110%;
+    transition: left 0.5s;
+}
+
+.navbar .navbar-brand div h3{
+    font-weight: bold;
+    margin: 0;
+}
+
+@media (max-width: 767px){
+    .navbar .navbar-brand i{
+        opacity: 0;
+    }
+      
+    .navbar .navbar-brand div{
+        left: 0;
+    }
+}
+
+/* Navbar right */
+
+.navbar-collapse .navbar-right li{
+    font-size: 130%;
+}
+
+.navbar-collapse .navbar-right li a{
+    color: #4c6269;
+    transition: color 0.5s;
+}
+
+.navbar-collapse .navbar-right li a:hover{
+    color: #4c6269;
+    color:#0088b3;
+    background-color: #f7f7f7;
+}
+
+
+/* search form */
+
+.search-form input[type=text]{
+    height: 50px;
+    font-size: 20px;
+}
+
+.search-form span button{
+    height: 50px;
+}
+
+.search-form .col-md-8{
+    transition: margin-left ease-in 0.5s;
+}
+
+/* top vehicles*/
+
+.top-vehicles{
+    list-style-type: none;
+    padding: 0;
+}
+
+.top-vehicles li{
+    padding: 0;
+    border: solid 0.5px;
+}
+
+@media (min-width: 1200px){
+    .top-vehicles li img{
+        max-height: 500px;
+    }
+}
