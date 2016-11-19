@@ -1,7 +1,6 @@
 ﻿body {
     font-family: 'Lato', sans-serif;
     position: relative;
-    padding-top: 120px;
     font-size: 14px;
 }
 
@@ -25,7 +24,7 @@
     padding: 0;
     position: relative;
     color: #4c6269;
-    transition: color 0.5s;
+    transition: color, 0.5s;
 }
 
 .navbar .navbar-brand:hover{
@@ -66,7 +65,7 @@
 
 .navbar-collapse .navbar-right li a{
     color: #4c6269;
-    transition: color 0.5s;
+    transition: color, background-color 0.5s;
 }
 
 .navbar-collapse .navbar-right li a:hover{
@@ -87,24 +86,109 @@
     height: 50px;
 }
 
-.search-form .col-md-8{
-    transition: margin-left ease-in 0.5s;
+.search-form .col-lg-8, .search-form .col-md-10{
+    transition: margin ease-in 0.5s;
+}
+
+/* page-headers*/
+
+.page-header{
+    position: relative;
+    border-bottom: none;
+    margin: 0;
+    margin: 10px 0;
+    transition: color 0.5s;
+    box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.2);
+}
+
+.page-header:hover{
+    color:#0088b3;
 }
 
 /* top vehicles*/
 
+.most-popular .row{
+    background-color: white;
+}
+
 .top-vehicles{
     list-style-type: none;
     padding: 0;
+    background-color: white;
 }
 
 .top-vehicles li{
+    position: relative;
     padding: 0;
-    border: solid 0.5px;
+    border-right: solid 2px white;
+    border-left: solid 2px white;
 }
 
-@media (min-width: 1200px){
-    .top-vehicles li img{
-        max-height: 500px;
+@media(max-width: 1200px){
+    .top-vehicles li{
+        border-bottom: solid 5px white;
     }
+}
+
+.top-vehicles li .bottom-description{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    padding: 4px 10px;
+    background-color: rgba(220, 220, 220, 0.8);
+    transition: height 1s;
+}
+
+.top-vehicles li:hover .bottom-description{
+    height: 90%;
+}
+
+.top-vehicles li .top-description{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    background-color: rgba(220, 220, 220, 0.9);
+    text-align: center;
+}
+
+.top-vehicles li .top-description h4, .top-vehicles li .bottom-description h2{
+    margin: 0;
+    width: auto;
+}
+
+
+/* filters */
+
+.filter-offers{
+    position: relative;
+    margin-top: 10px;
+    transition: color 0.5s;
+}
+
+.filter-offers:hover{
+    color:#0088b3;
+}
+
+.filter-offers h1{
+    margin: 0;
+}
+
+/* offers */
+
+.offers{
+    background-color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.offer{
+    margin: 10px 0;
+}
+
+.offer img{
+    width: 250px;
 }

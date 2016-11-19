@@ -2,6 +2,14 @@
 
 (function () {
 
+    $(".top-vehicles li .bottom-description h2").each(function () {
+        $(this).fitText(1.5);
+    });
+
+    $(".top-vehicles li .top-description h4").each(function () {
+        $(this).fitText(1.9);
+    });
+
     $(window).on("load resize", function () {
 
         var images = $(".top-vehicles li img");
