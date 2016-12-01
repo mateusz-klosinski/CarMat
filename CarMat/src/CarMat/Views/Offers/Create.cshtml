@@ -1,0 +1,95 @@
+﻿@model CarMat.ViewModels.OfferViewModel
+
+@{ 
+    ViewData["Title"] = "Dodaj ogłoszenie";
+}
+
+@section stylesheets{
+    <link rel="stylesheet" href="~/lib/jquery-ui/themes/base/jquery-ui.css" />
+}
+
+@section scripts{
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="~/js/create.js"></script>
+}
+
+<section>
+    <h1 class="page-header text-center">
+        <i class="fa fa-plus"></i> Dodaj ogłoszenie
+    </h1>
+</section>
+
+<section>
+
+    <div class="row">
+        <form class="new-offer-form form-group col-lg-offset-2 col-lg-8" method="post">
+
+            <div class="input-group">
+                <label asp-for="@Model.Title"></label>
+                <input class="form-control" asp-for="@Model.Title" placeholder="Maksymalnie 50 znaków" />
+            </div>
+
+            <div class="input-group">
+                <label asp-for="@Model.Price"></label>
+                <input class="form-control" asp-for="@Model.Price" />
+            </div>
+
+            <div class="input-group">
+                <label asp-for="@Model.Description"></label>
+                <textarea rows="5" class="form-control" asp-for="@Model.Description"></textarea>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="@Model.DateFinished"></label>
+                <input type="date" value="@Model.GetTommorowsDate()" min="@Model.GetTommorowsDate()" max="@Model.GetDateFourteenDaysFromToday()" class="form-control" asp-for="@Model.DateFinished" />
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="input-group">
+                <label asp-for="@Model.Vehicle.VehicleBrand"></label>
+                <input id="vehicle-brand" class="form-control"  asp-for="@Model.Vehicle.VehicleBrand" />
+            </div>
+
+            <div class="input-group">
+                <label asp-for="@Model.Vehicle.VehicleModel"></label>
+                <input id="vehicle-model" class="form-control" asp-for="@Model.Vehicle.VehicleModel" />
+            </div>
+
+            <div class="input-group">
+                <label asp-for="@Model.Vehicle.isDamaged"></label>
+                <input class="form-control" asp-for="@Model.Vehicle.isDamaged" />
+            </div>
+
+            <div class="input-group">
+                <label asp-for="@Model.Vehicle.isRegistered"></label>
+                <input class="form-control" asp-for="@Model.Vehicle.isRegistered" />
+            </div>
+
+            <div class="input-group">
+                <label asp-for="@Model.Vehicle.EngineCapacity"></label>
+                <input class="form-control" asp-for="@Model.Vehicle.EngineCapacity" />
+            </div>
+
+            <div class="input-group">
+                <label asp-for="@Model.Vehicle.Mileage"></label>
+                <input class="form-control" asp-for="@Model.Vehicle.Mileage" />
+            </div>
+
+            <div class="input-group">
+                <label asp-for="@Model.Vehicle.ProductionYear"></label>
+                <input class="form-control" asp-for="@Model.Vehicle.ProductionYear" />
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="input-group">
+                <a href="#" class="btn btn-lg btn-success"><i class="fa fa-check"></i> Zaakceptuj i przejdź do dodawania samochodu</a>
+                <a asp-action="Index" asp-controller="Home" class="btn btn-lg btn-danger"><i class="fa fa-minus-circle"></i> Anuluj</a>
+            </div>
+
+
+        </form>
+    </div>
+
+</section>
