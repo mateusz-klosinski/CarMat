@@ -25,10 +25,12 @@
     position: relative;
     color: #4c6269;
     transition: color, 0.5s;
+    transition: transform, 0.5s;
 }
 
 .navbar .navbar-brand:hover{
     color:#0088b3;
+    transform: scale(1.1);
 }
 
 .navbar .navbar-brand i{
@@ -246,5 +248,5 @@
     width: 100%;
     height: 0;
     margin: 15px 0;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+    border-bottom: 1px solid rgba(0, 136, 179, 0.5);
 }

@@ -34,6 +34,7 @@ namespace CarMat.ViewModels
         [Display(Name = "Marka")]
         public string VehicleBrand { get; set; }
 
-        public ICollection<VehicleVehicleEquipment> VehicleVehicleEquipment { get; set; }
+        [Required]
+        public List<string> VehicleEquipment { get; set; }
     }
 }

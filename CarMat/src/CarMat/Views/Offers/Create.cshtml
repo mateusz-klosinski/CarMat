@@ -48,12 +48,12 @@
 
             <div class="input-group">
                 <label asp-for="@Model.Vehicle.VehicleBrand"></label>
-                <input id="vehicle-brand" class="form-control"  asp-for="@Model.Vehicle.VehicleBrand" />
+                <input id="vehicle-brand" class="form-control"  asp-for="@Model.Vehicle.VehicleBrand" placeholder="Wpisz pierwszą literę i wybierz markę z listy..." />
             </div>
 
             <div class="input-group">
                 <label asp-for="@Model.Vehicle.VehicleModel"></label>
-                <input id="vehicle-model" class="form-control" asp-for="@Model.Vehicle.VehicleModel" />
+                <input id="vehicle-model" class="form-control" asp-for="@Model.Vehicle.VehicleModel" placeholder="Wpisz pierwszą literę i wybierz model z listy..." />
             </div>
 
             <div class="input-group">
@@ -68,17 +68,17 @@
 
             <div class="input-group">
                 <label asp-for="@Model.Vehicle.EngineCapacity"></label>
-                <input class="form-control" asp-for="@Model.Vehicle.EngineCapacity" />
+                <input class="form-control" asp-for="@Model.Vehicle.EngineCapacity" placeholder="Pojemność w cm3.." />
             </div>
 
             <div class="input-group">
                 <label asp-for="@Model.Vehicle.Mileage"></label>
-                <input class="form-control" asp-for="@Model.Vehicle.Mileage" />
+                <input class="form-control" asp-for="@Model.Vehicle.Mileage" placeholder="Przebieg w kilometrach..." />
             </div>
 
             <div class="input-group">
                 <label asp-for="@Model.Vehicle.ProductionYear"></label>
-                <input class="form-control" asp-for="@Model.Vehicle.ProductionYear" />
+                <input class="form-control" asp-for="@Model.Vehicle.ProductionYear" placeholder="Rok produkcji..." min="1900" max="@DateTime.Today.Year" />
             </div>
 
             <div class="separator"></div>
