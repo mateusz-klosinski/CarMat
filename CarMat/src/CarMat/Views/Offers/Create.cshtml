@@ -11,6 +11,8 @@
 @section scripts{
     <script src="~/lib/jquery-ui/jquery-ui.js"></script>
     <script src="~/js/create.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 }
 
 <section>
@@ -24,67 +26,75 @@
     <div class="row">
         <form class="new-offer-form form-group col-lg-offset-2 col-lg-8" method="post">
 
-            <div class="input-group">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="@Model.Title"></span>
                 <label asp-for="@Model.Title"></label>
                 <input class="form-control" asp-for="@Model.Title" placeholder="Maksymalnie 50 znaków" />
             </div>
 
-            <div class="input-group">
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="@Model.Price"></span>
                 <label asp-for="@Model.Price"></label>
                 <input class="form-control" asp-for="@Model.Price" />
             </div>
 
-            <div class="input-group">
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="@Model.Description"></span>
                 <label asp-for="@Model.Description"></label>
                 <textarea rows="5" class="form-control" asp-for="@Model.Description"></textarea>
             </div>
 
-            <div class="input-group">
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="@Model.DateFinished"></span>
                 <label asp-for="@Model.DateFinished"></label>
                 <input type="date" value="@Model.GetTommorowsDate()" min="@Model.GetTommorowsDate()" max="@Model.GetDateFourteenDaysFromToday()" class="form-control" asp-for="@Model.DateFinished" />
             </div>
 
             <div class="separator"></div>
 
-            <div class="input-group">
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="@Model.Vehicle.VehicleBrand"></span>
                 <label asp-for="@Model.Vehicle.VehicleBrand"></label>
                 <input id="vehicle-brand" class="form-control"  asp-for="@Model.Vehicle.VehicleBrand" placeholder="Wpisz pierwszą literę i wybierz markę z listy..." />
             </div>
 
-            <div class="input-group">
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="@Model.Vehicle.VehicleModel"></span>
                 <label asp-for="@Model.Vehicle.VehicleModel"></label>
                 <input id="vehicle-model" class="form-control" asp-for="@Model.Vehicle.VehicleModel" placeholder="Wpisz pierwszą literę i wybierz model z listy..." />
             </div>
 
-            <div class="input-group">
+            <div class="form-group">
                 <label asp-for="@Model.Vehicle.isDamaged"></label>
                 <input class="form-control" asp-for="@Model.Vehicle.isDamaged" />
             </div>
 
-            <div class="input-group">
+            <div class="form-group">
                 <label asp-for="@Model.Vehicle.isRegistered"></label>
                 <input class="form-control" asp-for="@Model.Vehicle.isRegistered" />
             </div>
 
-            <div class="input-group">
+            <div class="form-group">
                 <label asp-for="@Model.Vehicle.EngineCapacity"></label>
                 <input class="form-control" asp-for="@Model.Vehicle.EngineCapacity" placeholder="Pojemność w cm3.." />
             </div>
 
-            <div class="input-group">
+            <div class="form-group">
                 <label asp-for="@Model.Vehicle.Mileage"></label>
                 <input class="form-control" asp-for="@Model.Vehicle.Mileage" placeholder="Przebieg w kilometrach..." />
             </div>
 
-            <div class="input-group">
+            <div class="form-group">
                 <label asp-for="@Model.Vehicle.ProductionYear"></label>
                 <input class="form-control" asp-for="@Model.Vehicle.ProductionYear" placeholder="Rok produkcji..." min="1900" max="@DateTime.Today.Year" />
             </div>
 
             <div class="separator"></div>
 
-            <div class="input-group">
-                <a href="#" class="btn btn-lg btn-success"><i class="fa fa-check"></i> Zaakceptuj i przejdź do dodawania samochodu</a>
+            <div class="form-group">
+                <input type="submit" class="btn btn-lg btn-success" value="Dodaj">
                 <a asp-action="Index" asp-controller="Home" class="btn btn-lg btn-danger"><i class="fa fa-minus-circle"></i> Anuluj</a>
             </div>
 
