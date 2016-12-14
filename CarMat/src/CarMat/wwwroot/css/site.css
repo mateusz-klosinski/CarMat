@@ -12,18 +12,20 @@
 }
 
 .navbar-default {
+    border: none;
+    border-radius: 0;
     background-color: #dcdcdc;
-    border-color: #95ceef;
+    border-bottom: 0.5px solid rgba(149, 206, 239, 0.7);
 }
 
 /* Navbar logo */
 
 .navbar .navbar-brand{
+    position: relative;
+    color: #4c6269;
     height: auto;
     width: auto;
     padding: 0;
-    position: relative;
-    color: #4c6269;
     transition: color, 0.5s;
     transition: transform, 0.5s;
 }
@@ -79,9 +81,10 @@
 
 /* search form */
 
-.search-form input[type=text]{
+.search-form input[type=text], span.input-group-btn .btn{
     height: 50px;
     font-size: 20px;
+    border-radius: 0;
 }
 
 .search-form span button{
@@ -162,6 +165,33 @@
     width: auto;
 }
 
+.top-vehicles .top-button{
+    box-sizing: border-box;
+    color: inherit;
+    position: absolute;
+    left: 30%;
+    top: 40%;
+    opacity: 0;
+    font-size: 170%;
+    padding: 5% 10%;
+    border: 1px solid;
+    transition: opacity 0.5s;
+}
+
+.top-vehicles li:hover .top-button{
+    color: inherit;
+    opacity: 1;
+    text-decoration: none;
+    transition: opacity 1s ease-in, background-color 1s, color 1.5s;
+}
+
+.top-vehicles li:hover .top-button:hover{
+    opacity: 0.8;
+    border-color: rgba(0,0,0,0);
+    color: #cacaca;
+    background-color: #0088b3;
+}
+
 
 /* filters */
 
@@ -226,20 +256,20 @@
 
 /* new offer form*/
 
-.new-offer-form .input-group{
+.new-offer-form .form-group{
     width: 100%;
 }
 
-.new-offer-form .input-group input[type=date]{
+.new-offer-form .form-group input[type=date]{
     width: auto;
 }
 
-.new-offer-form .input-group input[type=checkbox]{
+.new-offer-form .form-group input[type=checkbox]{
     width: 30px;
     height: 30px;
 }
 
-.new-offer-form .input-group label{
+.new-offer-form .form-group label{
     font-size: 150%;
     display: block;
 }

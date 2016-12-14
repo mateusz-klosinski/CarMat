@@ -1,6 +1,8 @@
 ﻿using CarMat.Models;
 using CarMat.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,7 @@ namespace CarMat.Controllers
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             OfferViewModel offer = new OfferViewModel();
@@ -25,13 +28,21 @@ namespace CarMat.Controllers
             return View(offer);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create(OfferViewModel model)
         {
+            var userName = User.Identity.Name;
+            var user = _context.Users
+                .Include(u => u.Offers)
+                .Where(u => u.UserName
+                .Equals(userName))
+                .FirstOrDefault();
+
             if (ModelState.IsValid)
             {
                 Offer offer = new Offer();
-
+                offer.User = user;
                 offer.DateAdded = DateTime.Today;
                 offer.DateFinished = model.DateFinished;
                 offer.Description = model.Description;
@@ -47,6 +58,8 @@ namespace CarMat.Controllers
                     ProductionYear = model.Vehicle.ProductionYear,
                 };
 
+
+                user.Offers.Add(offer);
                 _context.Add(offer);
                 _context.SaveChanges();
 
