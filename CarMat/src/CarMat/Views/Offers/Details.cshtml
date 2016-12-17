@@ -1,0 +1,65 @@
+﻿@model CarMat.Models.Offer
+
+@{ 
+    ViewData["Title"] = @Model.Vehicle.Model.Name;
+}
+
+<section class="most-popular">
+    <h1 class="page-header text-center">
+        <i class="fa fa-car"></i> @Model.Title
+    </h1>
+</section>
+
+<div class="row">
+    <div id="carousel" class="carousel slide col-md-10 col-md-offset-1" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel" data-slide-to="1"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="~/images/bugatti.jpg" alt="...">
+            </div>
+            <div class="item">
+                <img src="~/images/ferrari.jpg" alt="...">
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<section class="container-fluid details">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1 details-offer">
+            <h1>@Model.Vehicle.Model.Brand.Name @Model.Vehicle.Model.Name</h1>
+            <p>Cena: <b>@Model.Price.ToString("c")</b></p>    
+            <p>Rok produkcji: <b>@Model.Vehicle.ProductionYear</b></p>
+            <p>Pojemność silnika: <b>@Model.Vehicle.EngineCapacity cm3</b></p>
+            <p>Przebieg: <b>@Model.Vehicle.Mileage km</b></p>
+            <p>Uszkodzony: <b>@( Model.Vehicle.isDamaged == true ? "TAK" : "NIE" )</b> </p>
+            <p>Zarejestrowany w Polsce: <b>@( Model.Vehicle.isRegistered == true ? "TAK" : "NIE" )</b> </p>
+            </br>
+            <h1>Opis</h1>
+            <p>@Model.Description</p>        
+        </div>
+
+        <div class="col-md-4 details-user">
+            <h1>Wystawione przez: </h1>
+            <p>@Model.User.UserName</p>
+            <h1>Kontakt:</h1>
+            <p>Email: @Model.User.Email</p>
+        </div>
+    </div>
+</section>

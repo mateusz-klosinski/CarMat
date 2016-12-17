@@ -20,6 +20,40 @@ namespace CarMat.Controllers
             _context = context;
         }
 
+        [Route("offers/details/{offerId}")]
+        public IActionResult Details(int offerId)
+        {
+            var offer = _context.Offers
+                .Include(o => o.Vehicle)
+                .Include(o => o.User)
+                .Include(o => o.Vehicle.Model)
+                .Include(o => o.Vehicle.Model.Brand)
+                .Where(o => o.Id == offerId)
+                .FirstOrDefault();
+
+
+            if (offer != null)
+            {
+                return View(offer);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public IActionResult Mine()
+        {
+            var username = User.Identity.Name;
+            var offers = _context.Offers
+                .Include(o => o.Vehicle)
+                .Include(o => o.User)
+                .Where(o => o.User.UserName
+                .Equals(username))
+                .ToList();
+
+            return View(offers);
+        }
+
         [Authorize]
         public IActionResult Create()
         {

@@ -20,7 +20,7 @@
                         </div>
                         <div class="bottom-description">
                             <h2>@offer.Title</h2>
-                            <a href="#" class="top-button">ZOBACZ</a>
+                            <a asp-action="Details" asp-controller="Offers" asp-route-offerId="@offer.Id" class="top-button">ZOBACZ</a>
                         </div>
                     </li>
                 }
@@ -49,7 +49,7 @@
                     <h1>@offer.Title</h1>
                     <p>Przebieg: @offer.Vehicle.Mileage km, Rok: @offer.Vehicle.ProductionYear, Pojemność silnika: @offer.Vehicle.EngineCapacity cm3</p>
                     <h3>@offer.Price.ToString("c")</h3>
-                    <button class="btn btn-info">Zobacz pełną ofertę</button>
+                    <a asp-action="Details" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-info">Zobacz pełną ofertę</a>
                 </div>
             </div>
         }

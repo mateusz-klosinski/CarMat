@@ -280,3 +280,26 @@
     margin: 15px 0;
     border-bottom: 1px solid rgba(0, 136, 179, 0.5);
 }
+
+
+/* Details page */
+
+.carousel .item img{
+    width: auto;
+    max-height: 500px;
+    margin: 0 auto;
+}
+
+.details{
+    font-size: 130%;
+}
+
+.details .details-user{
+    text-align: right;
+}
+
+@media (max-width: 991px){
+    .details, .details .details-user, .details .details-offer{
+        text-align: center;
+    }
+}

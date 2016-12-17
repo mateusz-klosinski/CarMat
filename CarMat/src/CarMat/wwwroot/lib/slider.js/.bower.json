@@ -1,0 +1,33 @@
+{
+  "name": "slider.js",
+  "version": "0.0.1",
+  "main": "slider.js",
+  "dependencies": {
+    "jquery": ">=1.2"
+  },
+  "homepage": "https://github.com/bowenpay/slider.js",
+  "authors": [
+    "yijingping <jingping.yi@gmail.com>"
+  ],
+  "description": "场景应用工具类",
+  "keywords": [
+    "slider"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.1",
+    "commit": "3e79084d6b65d0659baf2a67b5e420178463967b"
+  },
+  "_source": "https://github.com/bowenpay/slider.js.git",
+  "_target": "~0.0.1",
+  "_originalSource": "slider.js"
+}

@@ -11,7 +11,6 @@
         $(this).fitText(1.9);
     });
 
-
     //function for resizing and proper fit of the most popular offers
     $(window).on("load resize", function () {
 

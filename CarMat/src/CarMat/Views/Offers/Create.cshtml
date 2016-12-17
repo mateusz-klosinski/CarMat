@@ -29,66 +29,69 @@
             <div class="text-danger" asp-validation-summary="ModelOnly"></div>
 
             <div class="form-group">
-                <span class="text-danger" asp-validation-for="@Model.Title"></span>
-                <label asp-for="@Model.Title"></label>
-                <input class="form-control" asp-for="@Model.Title" placeholder="Maksymalnie 50 znaków" />
+                <label asp-for="Title"></label>
+                <span class="text-danger" asp-validation-for="Title"></span>
+                <input class="form-control" asp-for="Title" placeholder="Maksymalnie 50 znaków" />
             </div>
 
             <div class="form-group">
-                <span class="text-danger" asp-validation-for="@Model.Price"></span>
-                <label asp-for="@Model.Price"></label>
-                <input class="form-control" asp-for="@Model.Price" />
+                <label asp-for="Price"></label>
+                <span class="text-danger" asp-validation-for="Price"></span>
+                <input type="number" class="form-control" asp-for="Price" />
             </div>
 
             <div class="form-group">
-                <span class="text-danger" asp-validation-for="@Model.Description"></span>
-                <label asp-for="@Model.Description"></label>
-                <textarea rows="5" class="form-control" asp-for="@Model.Description"></textarea>
+                <label asp-for="Description"></label>
+                <span class="text-danger" asp-validation-for="Description"></span>
+                <textarea rows="5" class="form-control" asp-for="Description"></textarea>
             </div>
 
             <div class="form-group">
-                <span class="text-danger" asp-validation-for="@Model.DateFinished"></span>
-                <label asp-for="@Model.DateFinished"></label>
+                <label asp-for="DateFinished"></label>
+                <span class="text-danger" asp-validation-for="DateFinished"></span>
                 <input type="date" value="@Model.GetTommorowsDate()" min="@Model.GetTommorowsDate()" max="@Model.GetDateFourteenDaysFromToday()" class="form-control" asp-for="@Model.DateFinished" />
             </div>
 
             <div class="separator"></div>
 
             <div class="form-group">
-                <span class="text-danger" asp-validation-for="@Model.Vehicle.VehicleBrand"></span>
-                <label asp-for="@Model.Vehicle.VehicleBrand"></label>
-                <input id="vehicle-brand" class="form-control"  asp-for="@Model.Vehicle.VehicleBrand" placeholder="Wpisz pierwszą literę i wybierz markę z listy..." />
+                <label asp-for="Vehicle.VehicleBrand"></label>
+                <span class="text-danger" asp-validation-for="Vehicle.VehicleBrand"></span>
+                <input id="vehicle-brand" class="form-control"  asp-for="Vehicle.VehicleBrand" placeholder="Wpisz pierwszą literę i wybierz markę z listy..." />
+            </div>
+
+            <div class="form-group">                
+                <label asp-for="Vehicle.VehicleModel"></label>
+                <span class="text-danger" asp-validation-for="Vehicle.VehicleModel"></span>
+                <input id="vehicle-model" class="form-control" asp-for="Vehicle.VehicleModel" placeholder="Wpisz pierwszą literę i wybierz model z listy..." />
             </div>
 
             <div class="form-group">
-                <span class="text-danger" asp-validation-for="@Model.Vehicle.VehicleModel"></span>
-                <label asp-for="@Model.Vehicle.VehicleModel"></label>
-                <input id="vehicle-model" class="form-control" asp-for="@Model.Vehicle.VehicleModel" placeholder="Wpisz pierwszą literę i wybierz model z listy..." />
+                <label asp-for="Vehicle.isDamaged"></label>
+                <input class="form-control" asp-for="Vehicle.isDamaged" />
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.Vehicle.isDamaged"></label>
-                <input class="form-control" asp-for="@Model.Vehicle.isDamaged" />
+                <label asp-for="Vehicle.isRegistered"></label>
+                <input class="form-control" asp-for="Vehicle.isRegistered" />
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.Vehicle.isRegistered"></label>
-                <input class="form-control" asp-for="@Model.Vehicle.isRegistered" />
+                <label asp-for="Vehicle.EngineCapacity"></label>
+                <span class="text-danger" asp-validation-for="Vehicle.EngineCapacity"></span>
+                <input class="form-control" asp-for="Vehicle.EngineCapacity" placeholder="Pojemność w cm3.." />
             </div>
 
-            <div class="form-group">
-                <label asp-for="@Model.Vehicle.EngineCapacity"></label>
-                <input class="form-control" asp-for="@Model.Vehicle.EngineCapacity" placeholder="Pojemność w cm3.." />
+            <div class="form-group">                
+                <label asp-for="Vehicle.Mileage"></label>
+                <span class="text-danger" asp-validation-for="Vehicle.Mileage"></span>
+                <input class="form-control" asp-for="Vehicle.Mileage" placeholder="Przebieg w kilometrach..." />
             </div>
 
-            <div class="form-group">
-                <label asp-for="@Model.Vehicle.Mileage"></label>
-                <input class="form-control" asp-for="@Model.Vehicle.Mileage" placeholder="Przebieg w kilometrach..." />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="@Model.Vehicle.ProductionYear"></label>
-                <input class="form-control" asp-for="@Model.Vehicle.ProductionYear" placeholder="Rok produkcji..." min="1900" max="@DateTime.Today.Year" />
+            <div class="form-group">                
+                <label asp-for="Vehicle.ProductionYear"></label>
+                <span class="text-danger" asp-validation-for="Vehicle.ProductionYear"></span>
+                <input class="form-control" asp-for="Vehicle.ProductionYear" placeholder="Rok produkcji..." min="1900" max="@DateTime.Today.Year" />
             </div>
 
             <div class="separator"></div>
