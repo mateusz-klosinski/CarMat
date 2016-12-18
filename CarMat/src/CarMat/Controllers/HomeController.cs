@@ -21,6 +21,7 @@ namespace CarMat.Controllers
         {
             var offersWithVehicles = _context.Offers
                 .Include(o => o.Vehicle)
+                .Where(o => o.DateFinished > DateTime.Today)
                 .Select(o => new SimpleOfferViewModel
                 {
                     EngineCapacity = o.Vehicle.EngineCapacity,

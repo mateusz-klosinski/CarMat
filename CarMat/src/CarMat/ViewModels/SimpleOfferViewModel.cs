@@ -21,5 +21,7 @@ namespace CarMat.ViewModels
 
         public int EngineCapacity { get; set; }
 
+        public DateTime DateFinished { get; set;}
+
     }
 }

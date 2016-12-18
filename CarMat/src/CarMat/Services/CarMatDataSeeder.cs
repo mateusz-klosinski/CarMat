@@ -475,6 +475,15 @@ namespace CarMat.Services
                         Price = 15000,
                         Description = "Kupiona w polskim salonie użytkowana przez starszą osobę tylko w niedzielę do kościoła. Niepalone w środku, dziadek płakał jak sprzedawał.",
                         User = await _userManager.FindByNameAsync("Admin"),
+                        Vehicle = new Vehicle
+                        {
+                            Model = _context.VehicleModels.Where(vm => vm.Name == "RX-8").FirstOrDefault(),
+                            isDamaged = false,
+                            isRegistered = false,
+                            EngineCapacity = 1300,
+                            Mileage = 157000,
+                            ProductionYear = 2005,
+                        },
                     },
                     new Offer
                     {
@@ -484,6 +493,16 @@ namespace CarMat.Services
                         Price = 45000,
                         Description = "Dużo o samym samochodzie pisać nie trzeba, niesamowite przyspieszenie, legendarny napęd na 4x4. Nikt nie przejdzie wokół niego obojętnie!",
                         User = await _userManager.FindByNameAsync("Admin"),
+                        Vehicle = new Vehicle
+                        {
+                            Model = _context.VehicleModels.Where(vm => vm.Name == "Impreza").FirstOrDefault(),
+                            isDamaged = false,
+                            isRegistered = false,
+                            EngineCapacity = 2500,
+                            Mileage = 15000,
+                            ProductionYear = 2011,
+                            Offer = _context.Offers.Where(o => o.Price == 45000).FirstOrDefault(),
+                        },
                     },
                     new Offer
                     {
@@ -493,6 +512,16 @@ namespace CarMat.Services
                         Price = 17599,
                         Description = "Tylko 50 tysięcy przebiegu, stan jak nowy, niezniszczalny silnik 1.9 tdi!",
                         User = await _userManager.FindByNameAsync("Testowy0"),
+                        Vehicle = new Vehicle
+                        {
+                            Model = _context.VehicleModels.Where(vm => vm.Name == "Passat").FirstOrDefault(),
+                            isDamaged = false,
+                            isRegistered = false,
+                            EngineCapacity = 1900,
+                            Mileage = 50000,
+                            ProductionYear = 2000,
+                            Offer = _context.Offers.Where(o => o.Price == 17599).FirstOrDefault(),
+                        },
                     },
                     new Offer
                     {
@@ -502,6 +531,17 @@ namespace CarMat.Services
                         Price = 27000,
                         Description = "Volskwagen Golf w wersji GTI, niepozorny ale ma kopa.",
                         User = await _userManager.FindByNameAsync("Testowy0"),
+                        Vehicle = new Vehicle
+                        {
+                            Model = _context.VehicleModels.Where(vm => vm.Name == "Golf").FirstOrDefault(),
+                            isDamaged = false,
+                            isRegistered = false,
+                            EngineCapacity = 2000,
+                            Mileage = 57000,
+                            ProductionYear = 2009,
+                            Offer = _context.Offers.Where(o => o.Price == 27000).FirstOrDefault(),
+                        },
+
                     },
                 };
 
@@ -511,60 +551,6 @@ namespace CarMat.Services
                 _context.Offers.AddRange(offers);
                 await _context.SaveChangesAsync();
 
-            }
-
-
-            //Create sample vehicles for offers
-
-            if (!_context.Vehicles.Any())
-            {
-                var vehicles = new List<Vehicle>
-                {
-                    new Vehicle
-                    {
-                        Model = _context.VehicleModels.Where(vm => vm.Name == "RX-8").FirstOrDefault(),
-                        isDamaged = false,
-                        isRegistered = false,
-                        EngineCapacity = 1300,
-                        Mileage = 157000,
-                        ProductionYear = 2005,
-                        Offer = _context.Offers.Where(o => o.Price == 15000).FirstOrDefault(),
-                    },
-                    new Vehicle
-                    {
-                        Model = _context.VehicleModels.Where(vm => vm.Name == "Impreza").FirstOrDefault(),
-                        isDamaged = false,
-                        isRegistered = false,
-                        EngineCapacity = 2500,
-                        Mileage = 15000,
-                        ProductionYear = 2011,
-                        Offer = _context.Offers.Where(o => o.Price == 45000).FirstOrDefault(),
-                    },
-                    new Vehicle
-                    {
-                        Model = _context.VehicleModels.Where(vm => vm.Name == "Passat").FirstOrDefault(),
-                        isDamaged = false,
-                        isRegistered = false,
-                        EngineCapacity = 1900,
-                        Mileage = 50000,
-                        ProductionYear = 2000,
-                        Offer = _context.Offers.Where(o => o.Price == 17599).FirstOrDefault(),
-                    },
-                    new Vehicle
-                    {
-                        Model = _context.VehicleModels.Where(vm => vm.Name == "Golf").FirstOrDefault(),
-                        isDamaged = false,
-                        isRegistered = false,
-                        EngineCapacity = 2000,
-                        Mileage = 57000,
-                        ProductionYear = 2009,
-                        Offer = _context.Offers.Where(o => o.Price == 27000).FirstOrDefault(),
-                    },
-                };
-
-
-                _context.Vehicles.AddRange(vehicles);
-                await _context.SaveChangesAsync();
             }
 
 

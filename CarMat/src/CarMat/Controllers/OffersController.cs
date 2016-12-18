@@ -74,7 +74,8 @@ namespace CarMat.Controllers
                     Mileage = o.Vehicle.Mileage,
                     Price = o.Price,
                     ProductionYear = o.Vehicle.ProductionYear,
-                    Title = o.Title
+                    Title = o.Title,
+                    DateFinished = o.DateFinished,
                 })
                 .ToList();
 
