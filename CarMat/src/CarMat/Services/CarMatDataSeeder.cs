@@ -489,7 +489,7 @@ namespace CarMat.Services
                     {
                         DateAdded = DateTime.Now,
                         DateFinished = DateTime.Now + TimeSpan.FromDays(100),
-                        Title = "VW PASSAT 50k przebiegu, 2000 rok!",
+                        Title = "VW PASSAT 50k 2000 rok",
                         Price = 17599,
                         Description = "Tylko 50 tysięcy przebiegu, stan jak nowy, niezniszczalny silnik 1.9 tdi!",
                         User = await _userManager.FindByNameAsync("Testowy0"),

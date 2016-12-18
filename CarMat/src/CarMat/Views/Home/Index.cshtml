@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CarMat.Models.Offer>
+﻿@model IEnumerable<CarMat.ViewModels.SimpleOfferViewModel>
 
     @{
         ViewData["Title"] = "Strona główna";
@@ -38,7 +38,7 @@
 
 
 
-    <section class="offers container-fluid">
+<section class="offers container-fluid">
         @foreach (var offer in Model.Skip(4))
         {
             <div class="offer">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="offer-description">
                     <h1>@offer.Title</h1>
-                    <p>Przebieg: @offer.Vehicle.Mileage km, Rok: @offer.Vehicle.ProductionYear, Pojemność silnika: @offer.Vehicle.EngineCapacity cm3</p>
+                    <p>Przebieg: @offer.Mileage km, Rok: @offer.ProductionYear, Pojemność silnika: @offer.EngineCapacity cm<sup>3</sup></p>
                     <h3>@offer.Price.ToString("c")</h3>
                     <a asp-action="Details" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-info">Zobacz pełną ofertę</a>
                 </div>

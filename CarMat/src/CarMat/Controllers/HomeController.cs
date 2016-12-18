@@ -21,6 +21,15 @@ namespace CarMat.Controllers
         {
             var offersWithVehicles = _context.Offers
                 .Include(o => o.Vehicle)
+                .Select(o => new SimpleOfferViewModel
+                {
+                    EngineCapacity = o.Vehicle.EngineCapacity,
+                    Id = o.Id,
+                    Mileage = o.Vehicle.Mileage,
+                    Price = o.Price,
+                    ProductionYear = o.Vehicle.ProductionYear,
+                    Title = o.Title
+                })
                 .ToList();
 
             return View(offersWithVehicles);

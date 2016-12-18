@@ -1,10 +1,10 @@
-﻿@model CarMat.Models.Offer
+﻿@model CarMat.ViewModels.OfferDetailsViewModel
 
 @{ 
-    ViewData["Title"] = @Model.Vehicle.Model.Name;
+    ViewData["Title"] = @Model.VehicleModel;
 }
 
-<section class="most-popular">
+<section>
     <h1 class="page-header text-center">
         <i class="fa fa-car"></i> @Model.Title
     </h1>
@@ -43,23 +43,24 @@
 <section class="container-fluid details">
     <div class="row">
         <div class="col-md-6 col-md-offset-1 details-offer">
-            <h1>@Model.Vehicle.Model.Brand.Name @Model.Vehicle.Model.Name</h1>
-            <p>Cena: <b>@Model.Price.ToString("c")</b></p>    
-            <p>Rok produkcji: <b>@Model.Vehicle.ProductionYear</b></p>
-            <p>Pojemność silnika: <b>@Model.Vehicle.EngineCapacity cm3</b></p>
-            <p>Przebieg: <b>@Model.Vehicle.Mileage km</b></p>
-            <p>Uszkodzony: <b>@( Model.Vehicle.isDamaged == true ? "TAK" : "NIE" )</b> </p>
-            <p>Zarejestrowany w Polsce: <b>@( Model.Vehicle.isRegistered == true ? "TAK" : "NIE" )</b> </p>
-            </br>
+            <h1>@Model.VehicleBrand @Model.VehicleModel</h1>
+            <p>Cena: <b>@Model.Price.ToString("c")</b></p>
+            <p>Rok produkcji: <b>@Model.ProductionYear</b></p>
+            <p>Pojemność silnika: <b>@Model.EngineCapacity cm<sup>3</sup></b></p>
+            <p>Przebieg: <b>@Model.Mileage km</b></p>
+            <p>Uszkodzony: <b>@( Model.isDamaged == true ? "TAK" : "NIE" )</b> </p>
+            <p>Zarejestrowany w Polsce: <b>@( Model.isRegistered == true ? "TAK" : "NIE" )</b> </p>
             <h1>Opis</h1>
-            <p>@Model.Description</p>        
+            <p>@Model.Description</p>
         </div>
 
         <div class="col-md-4 details-user">
             <h1>Wystawione przez: </h1>
-            <p>@Model.User.UserName</p>
+            <p>@Model.UserName</p>
             <h1>Kontakt:</h1>
-            <p>Email: @Model.User.Email</p>
+            <p>Email: @Model.Email</p>
+            <h6>Dodano: <b>@Model.DateAdded.Date.ToString("dd-MM-yyyy")</b></h6>
+            <h6>Data zakończenia: <b>@Model.DateFinished.Date.ToString("dd-MM-yyyy")</b></h6>
         </div>
     </div>
 </section>

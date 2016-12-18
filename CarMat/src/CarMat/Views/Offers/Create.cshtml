@@ -1,7 +1,7 @@
-﻿@model CarMat.ViewModels.OfferViewModel
+﻿@model CarMat.ViewModels.OfferFormViewModel
 
 @{ 
-    ViewData["Title"] = "Dodaj ogłoszenie";
+    ViewData["Title"] = (Model.Action.Equals("Create") ? "Dodaj ogłoszenie" : "Edytuj ogłoszenie");
 }
 
 @section stylesheets{
@@ -17,14 +17,14 @@
 
 <section>
     <h1 class="page-header text-center">
-        <i class="fa fa-plus"></i> Dodaj ogłoszenie
+        <i class="fa fa-plus"></i> @(Model.Action.Equals("Create") ? "Dodaj ogłoszenie" : "Edytuj ogłoszenie")
     </h1>
 </section>
 
 <section>
 
     <div class="row">
-        <form class="new-offer-form form-group col-lg-offset-2 col-lg-8" method="post">
+        <form asp-action="@Model.Action" asp-controller="Offers" class="new-offer-form form-group col-lg-offset-2 col-lg-8" method="post">
 
             <div class="text-danger" asp-validation-summary="ModelOnly"></div>
 
@@ -55,49 +55,49 @@
             <div class="separator"></div>
 
             <div class="form-group">
-                <label asp-for="Vehicle.VehicleBrand"></label>
-                <span class="text-danger" asp-validation-for="Vehicle.VehicleBrand"></span>
-                <input id="vehicle-brand" class="form-control"  asp-for="Vehicle.VehicleBrand" placeholder="Wpisz pierwszą literę i wybierz markę z listy..." />
-            </div>
-
-            <div class="form-group">                
-                <label asp-for="Vehicle.VehicleModel"></label>
-                <span class="text-danger" asp-validation-for="Vehicle.VehicleModel"></span>
-                <input id="vehicle-model" class="form-control" asp-for="Vehicle.VehicleModel" placeholder="Wpisz pierwszą literę i wybierz model z listy..." />
+                <label asp-for="VehicleBrand"></label>
+                <span class="text-danger" asp-validation-for="VehicleBrand"></span>
+                <input id="vehicle-brand" class="form-control" asp-for="VehicleBrand" placeholder="Wpisz pierwszą literę i wybierz markę z listy..." />
             </div>
 
             <div class="form-group">
-                <label asp-for="Vehicle.isDamaged"></label>
-                <input class="form-control" asp-for="Vehicle.isDamaged" />
+                <label asp-for="VehicleModel"></label>
+                <span class="text-danger" asp-validation-for="VehicleModel"></span>
+                <input id="vehicle-model" class="form-control" asp-for="VehicleModel" placeholder="Wpisz pierwszą literę i wybierz model z listy..." />
             </div>
 
             <div class="form-group">
-                <label asp-for="Vehicle.isRegistered"></label>
-                <input class="form-control" asp-for="Vehicle.isRegistered" />
+                <label asp-for="isDamaged"></label>
+                <input class="form-control" asp-for="isDamaged" />
             </div>
 
             <div class="form-group">
-                <label asp-for="Vehicle.EngineCapacity"></label>
-                <span class="text-danger" asp-validation-for="Vehicle.EngineCapacity"></span>
-                <input class="form-control" asp-for="Vehicle.EngineCapacity" placeholder="Pojemność w cm3.." />
+                <label asp-for="isRegistered"></label>
+                <input class="form-control" asp-for="isRegistered" />
             </div>
 
-            <div class="form-group">                
-                <label asp-for="Vehicle.Mileage"></label>
-                <span class="text-danger" asp-validation-for="Vehicle.Mileage"></span>
-                <input class="form-control" asp-for="Vehicle.Mileage" placeholder="Przebieg w kilometrach..." />
+            <div class="form-group">
+                <label asp-for="EngineCapacity"></label>
+                <span class="text-danger" asp-validation-for="EngineCapacity"></span>
+                <input class="form-control" asp-for="EngineCapacity" placeholder="Pojemność w cm3.." />
             </div>
 
-            <div class="form-group">                
-                <label asp-for="Vehicle.ProductionYear"></label>
-                <span class="text-danger" asp-validation-for="Vehicle.ProductionYear"></span>
-                <input class="form-control" asp-for="Vehicle.ProductionYear" placeholder="Rok produkcji..." min="1900" max="@DateTime.Today.Year" />
+            <div class="form-group">
+                <label asp-for="Mileage"></label>
+                <span class="text-danger" asp-validation-for="Mileage"></span>
+                <input class="form-control" asp-for="Mileage" placeholder="Przebieg w kilometrach..." />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProductionYear"></label>
+                <span class="text-danger" asp-validation-for="ProductionYear"></span>
+                <input class="form-control" asp-for="ProductionYear" placeholder="Rok produkcji..." min="1900" max="@DateTime.Today.Year" />
             </div>
 
             <div class="separator"></div>
 
             <div class="form-group">
-                <input type="submit" class="btn btn-lg btn-success" value="Dodaj">
+                <input type="submit" class="btn btn-lg btn-success" value="Zatwierdź">
                 <a asp-action="Index" asp-controller="Home" class="btn btn-lg btn-danger"><i class="fa fa-minus-circle"></i> Anuluj</a>
             </div>
 
