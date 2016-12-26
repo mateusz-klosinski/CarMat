@@ -49,7 +49,12 @@
             <div class="form-group">
                 <label asp-for="DateFinished"></label>
                 <span class="text-danger" asp-validation-for="DateFinished"></span>
-                <input type="date" value="@Model.GetTommorowsDate()" min="@Model.GetTommorowsDate()" max="@Model.GetDateFourteenDaysFromToday()" class="form-control" asp-for="@Model.DateFinished" />
+                <input type="date" 
+                       value="@Model.GetTommorowsDate()" 
+                       min="@Model.GetTommorowsDate()" 
+                       max="@Model.GetDateFourteenDaysFromToday()" 
+                       class="form-control" 
+                       asp-for="@Model.DateFinished" />
             </div>
 
             <div class="separator"></div>
@@ -91,7 +96,7 @@
             <div class="form-group">
                 <label asp-for="ProductionYear"></label>
                 <span class="text-danger" asp-validation-for="ProductionYear"></span>
-                <input class="form-control" asp-for="ProductionYear" placeholder="Rok produkcji..." min="1900" max="@DateTime.Today.Year" />
+                <input class="form-control" asp-for="ProductionYear" placeholder="Rok produkcji..."/>
             </div>
 
             <div class="form-group">

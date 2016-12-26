@@ -1,4 +1,5 @@
 ﻿using CarMat.Models;
+using CarMat.ViewModels.ValidationAttributes;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -40,19 +41,19 @@ namespace CarMat.ViewModels
 
         [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Rok produkcji")]
-        [Range(1900, 2017, ErrorMessage = "Pole {0} musi być z zakresu od {1} do {2}")]
+        [Range(1900, 2017, ErrorMessage = "Pole {0} musi mieć rok z zakresu od {1} do {2}")]
         public int ProductionYear { get; set; }
 
 
         [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Przebieg")]
-        [Range(0, 5000000, ErrorMessage = "Pole {0} musi być z zakresu od {1} do {2}")]
+        [Range(0, 5000000, ErrorMessage = "Pole {0} musi mieć przebieg z zakresu od {1} do {2} km")]
         public int Mileage { get; set; }
 
 
         [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Pojemność silnika")]
-        [Range(0, 100000, ErrorMessage = "Pole {0} musi być z zakresu od {1} do {2}")]
+        [Range(0, 100000, ErrorMessage = "Pole {0} musi mieć pojemność z zakresu od {1} do {2} cm3")]
         public int EngineCapacity { get; set; }
 
 
@@ -68,11 +69,13 @@ namespace CarMat.ViewModels
 
         [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Model")]
+        [ExistingModel]
         public string VehicleModel { get; set; }
 
 
         [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Marka")]
+        [ExistingBrand]
         public string VehicleBrand { get; set; }
 
 

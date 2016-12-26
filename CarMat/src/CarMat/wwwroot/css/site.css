@@ -292,6 +292,10 @@
     height: 30px;
 }
 
+.new-offer-form .form-group textarea{
+    max-width: 100%;
+}
+
 .new-offer-form .form-group label{
     font-size: 150%;
     display: block;

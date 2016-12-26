@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CarMat.ViewModels
+namespace CarMat.ViewModels.ValidationAttributes
 {
     public class ValidOfferTime : ValidationAttribute
     {

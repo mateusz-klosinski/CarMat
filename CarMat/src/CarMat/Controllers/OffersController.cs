@@ -121,10 +121,14 @@ namespace CarMat.Controllers
                     .Equals(model.VehicleModel))
                     .FirstOrDefault();
 
-                var equipmentForVehicle = _context.VehicleEquipments
-                    .Where(ve => model.VehicleEquipment
-                    .Any(e => e.Equals(ve.Name)))
-                    .ToList();
+                List<VehicleEquipment> equipmentForVehicle = null;
+                if (model.VehicleEquipment != null)
+                {
+                    equipmentForVehicle = _context.VehicleEquipments
+                   .Where(ve => model.VehicleEquipment
+                   .Any(e => e.Equals(ve.Name)))
+                   .ToList();
+                }
 
 
                 Offer offer = new Offer
@@ -147,14 +151,17 @@ namespace CarMat.Controllers
                     }
                 };
 
+                if (equipmentForVehicle != null)
+                {
+                    equipmentForVehicle
+                        .ForEach(efv => offer.Vehicle.VehicleVehicleEquipment
+                        .Add(new VehicleVehicleEquipment
+                        {
+                            Vehicle = offer.Vehicle,
+                            Equipment = efv,
+                        }));
+                }
 
-                equipmentForVehicle
-                    .ForEach(efv => offer.Vehicle.VehicleVehicleEquipment
-                    .Add(new VehicleVehicleEquipment
-                    {
-                        Vehicle = offer.Vehicle,
-                        Equipment = efv,
-                    }));
 
 
                 user.Offers.Add(offer);
@@ -164,7 +171,10 @@ namespace CarMat.Controllers
                 return RedirectToAction("Mine");
             }
             else
+            {
+                model.AvailableEquipment = new MultiSelectList(_context.VehicleEquipments.Select(ve => ve.Name).ToList());
                 return View(model);
+            }
         }
 
         [Authorize]
@@ -232,10 +242,14 @@ namespace CarMat.Controllers
                     .Where(o => o.Id == offerId && o.User.UserName.Equals(username))
                     .FirstOrDefault();
 
-                var equipmentForVehicle = _context.VehicleEquipments
-                    .Where(ve => model.VehicleEquipment
-                    .Any(e => e.Equals(ve.Name)))
-                    .ToList();
+                List<VehicleEquipment> equipmentForVehicle = null;
+                if (model.VehicleEquipment != null)
+                {
+                    equipmentForVehicle = _context.VehicleEquipments
+                        .Where(ve => model.VehicleEquipment
+                        .Any(e => e.Equals(ve.Name)))
+                        .ToList();
+                }
 
 
 
@@ -255,30 +269,33 @@ namespace CarMat.Controllers
                     offer.Vehicle.ProductionYear = model.ProductionYear;
 
 
-
-                    foreach(var equipment in equipmentForVehicle)
+                    if (equipmentForVehicle != null)
                     {
-                        if (!offer.Vehicle.VehicleVehicleEquipment.Any(ve => ve.EquipmentId == equipment.Id))
+                        foreach (var equipment in equipmentForVehicle)
                         {
-                            var newEquipment = new VehicleVehicleEquipment
+                            if (!offer.Vehicle.VehicleVehicleEquipment.Any(ve => ve.EquipmentId == equipment.Id))
                             {
-                                Vehicle = offer.Vehicle,
-                                Equipment = equipment,
-                            };
+                                var newEquipment = new VehicleVehicleEquipment
+                                {
+                                    Vehicle = offer.Vehicle,
+                                    Equipment = equipment,
+                                };
 
-                            offer.Vehicle.VehicleVehicleEquipment.Add(newEquipment);
-                            _context.VehicleVehicleEquipment.Add(newEquipment);
+                                offer.Vehicle.VehicleVehicleEquipment.Add(newEquipment);
+                                _context.VehicleVehicleEquipment.Add(newEquipment);
+                            }
                         }
-                    }
 
-                    foreach(var equipment in offer.Vehicle.VehicleVehicleEquipment.ToList())
-                    {
-                        if (!equipmentForVehicle.Any(e => e.Id == equipment.EquipmentId))
+                        foreach (var equipment in offer.Vehicle.VehicleVehicleEquipment.ToList())
                         {
-                            offer.Vehicle.VehicleVehicleEquipment.Remove(equipment);
-                            _context.VehicleVehicleEquipment.Remove(equipment);
+                            if (!equipmentForVehicle.Any(e => e.Id == equipment.EquipmentId))
+                            {
+                                offer.Vehicle.VehicleVehicleEquipment.Remove(equipment);
+                                _context.VehicleVehicleEquipment.Remove(equipment);
+                            }
                         }
                     }
+
 
                     _context.Update(offer);
                     _context.SaveChanges();
