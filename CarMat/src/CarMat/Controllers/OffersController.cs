@@ -2,6 +2,7 @@
 using CarMat.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace CarMat.Controllers
                 .Include(o => o.User)
                 .Include(o => o.Vehicle.Model)
                 .Include(o => o.Vehicle.Model.Brand)
+                .Include(o => o.Vehicle.VehicleVehicleEquipment)
                 .Where(o => o.Id == offerId)
                 .Select(o => new OfferDetailsViewModel
                 {
@@ -45,7 +47,11 @@ namespace CarMat.Controllers
                     Title = o.Title,
                     UserName = o.User.UserName,
                     VehicleBrand = o.Vehicle.Model.Brand.Name,
-                    VehicleModel = o.Vehicle.Model.Name
+                    VehicleModel = o.Vehicle.Model.Name,
+
+                    VehicleEquipment = o.Vehicle.VehicleVehicleEquipment
+                        .Select(vve => vve.Equipment.Name)
+                     .ToList(),
                 })
                 .FirstOrDefault();
 
@@ -87,7 +93,10 @@ namespace CarMat.Controllers
         {
             OfferFormViewModel offer = new OfferFormViewModel
             {
-                Action = "Create"
+                Action = "Create",
+                AvailableEquipment = new MultiSelectList(_context.VehicleEquipments
+                    .Select(ve => ve.Name)
+                    .ToList())
             };
 
             return View(offer);
@@ -97,41 +106,62 @@ namespace CarMat.Controllers
         [HttpPost]
         public IActionResult Create(OfferFormViewModel model)
         {
-            var userName = User.Identity.Name;
-            var user = _context.Users
-                .Include(u => u.Offers)
-                .Where(u => u.UserName
-                .Equals(userName))
-                .FirstOrDefault();
-
             if (ModelState.IsValid)
             {
-                Offer offer = new Offer();
-                offer.User = user;
-                offer.DateAdded = DateTime.Today;
-                offer.DateFinished = model.DateFinished;
-                offer.Description = model.Description;
-                offer.Price = Decimal.Parse(model.Price);
-                offer.Title = model.Title;
-                offer.Vehicle = new Vehicle
+                var userName = User.Identity.Name;
+
+                var user = _context.Users
+                    .Include(u => u.Offers)
+                    .Where(u => u.UserName
+                    .Equals(userName))
+                    .FirstOrDefault();
+
+                var vehicleModel = _context.VehicleModels
+                    .Where(vm => vm.Name
+                    .Equals(model.VehicleModel))
+                    .FirstOrDefault();
+
+                var equipmentForVehicle = _context.VehicleEquipments
+                    .Where(ve => model.VehicleEquipment
+                    .Any(e => e.Equals(ve.Name)))
+                    .ToList();
+
+
+                Offer offer = new Offer
                 {
-                    EngineCapacity = model.EngineCapacity,
-                    isDamaged = model.isDamaged,
-                    isRegistered = model.isRegistered,
-                    Mileage = model.Mileage,
-                    Model = _context.VehicleModels
-                        .Where(vm => vm.Name
-                        .Equals(model.VehicleModel))
-                        .FirstOrDefault(),
-                    ProductionYear = model.ProductionYear,
+                    User = user,
+                    DateAdded = DateTime.Today,
+                    DateFinished = model.DateFinished,
+                    Description = model.Description,
+                    Price = decimal.Parse(model.Price),
+                    Title = model.Title,
+                    Vehicle = new Vehicle
+                    {
+                        EngineCapacity = model.EngineCapacity,
+                        isDamaged = model.isDamaged,
+                        isRegistered = model.isRegistered,
+                        Mileage = model.Mileage,
+                        Model = vehicleModel,
+                        ProductionYear = model.ProductionYear,
+                        VehicleVehicleEquipment = new List<VehicleVehicleEquipment>(),
+                    }
                 };
+
+
+                equipmentForVehicle
+                    .ForEach(efv => offer.Vehicle.VehicleVehicleEquipment
+                    .Add(new VehicleVehicleEquipment
+                    {
+                        Vehicle = offer.Vehicle,
+                        Equipment = efv,
+                    }));
 
 
                 user.Offers.Add(offer);
                 _context.Add(offer);
                 _context.SaveChanges();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Mine");
             }
             else
                 return View(model);
@@ -148,12 +178,12 @@ namespace CarMat.Controllers
                 .Include(o => o.Vehicle)
                 .Include(o => o.Vehicle.Model)
                 .Include(o => o.Vehicle.Model.Brand)
+                .Include(o => o.Vehicle.VehicleVehicleEquipment)
                 .Where(o => o.User.UserName
                 .Equals(username) && o.Id == offerId)
                 .Select(o => new OfferFormViewModel
                 {
                     Id = o.Id,
-                    DateAdded = o.DateAdded,
                     DateFinished = o.DateFinished,
                     Description = o.Description,
                     Price = o.Price.ToString("0"),
@@ -165,6 +195,14 @@ namespace CarMat.Controllers
                     ProductionYear = o.Vehicle.ProductionYear,
                     VehicleBrand = o.Vehicle.Model.Brand.Name,
                     VehicleModel = o.Vehicle.Model.Name,
+
+                    VehicleEquipment = o.Vehicle.VehicleVehicleEquipment
+                        .Select(ve => ve.Equipment.Name).ToList(),
+
+                    AvailableEquipment = new MultiSelectList(_context.VehicleEquipments
+                        .Select(ve => ve.Name)
+                        .ToList()),
+
                     Action = "Edit",
                 })
                 .FirstOrDefault();
@@ -175,7 +213,7 @@ namespace CarMat.Controllers
                 return View("Create", offerToEdit);
             }
             else
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Mine");
         }
 
         [Authorize]
@@ -190,12 +228,20 @@ namespace CarMat.Controllers
                 var offer = _context.Offers
                     .Include(o => o.Vehicle)
                     .Include(o => o.User)
+                    .Include(o => o.Vehicle.VehicleVehicleEquipment)
                     .Where(o => o.Id == offerId && o.User.UserName.Equals(username))
                     .FirstOrDefault();
 
+                var equipmentForVehicle = _context.VehicleEquipments
+                    .Where(ve => model.VehicleEquipment
+                    .Any(e => e.Equals(ve.Name)))
+                    .ToList();
+
+
+
                 if (offer != null)
                 {
-                    offer.Price = Decimal.Parse(model.Price);
+                    offer.Price = decimal.Parse(model.Price);
                     offer.Title = model.Title;
                     offer.Vehicle.EngineCapacity = model.EngineCapacity;
                     offer.Vehicle.isDamaged = model.isDamaged;
@@ -207,6 +253,32 @@ namespace CarMat.Controllers
                         .FirstOrDefault();
 
                     offer.Vehicle.ProductionYear = model.ProductionYear;
+
+
+
+                    foreach(var equipment in equipmentForVehicle)
+                    {
+                        if (!offer.Vehicle.VehicleVehicleEquipment.Any(ve => ve.EquipmentId == equipment.Id))
+                        {
+                            var newEquipment = new VehicleVehicleEquipment
+                            {
+                                Vehicle = offer.Vehicle,
+                                Equipment = equipment,
+                            };
+
+                            offer.Vehicle.VehicleVehicleEquipment.Add(newEquipment);
+                            _context.VehicleVehicleEquipment.Add(newEquipment);
+                        }
+                    }
+
+                    foreach(var equipment in offer.Vehicle.VehicleVehicleEquipment.ToList())
+                    {
+                        if (!equipmentForVehicle.Any(e => e.Id == equipment.EquipmentId))
+                        {
+                            offer.Vehicle.VehicleVehicleEquipment.Remove(equipment);
+                            _context.VehicleVehicleEquipment.Remove(equipment);
+                        }
+                    }
 
                     _context.Update(offer);
                     _context.SaveChanges();

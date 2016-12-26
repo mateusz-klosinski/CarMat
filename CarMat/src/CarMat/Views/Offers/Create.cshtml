@@ -94,6 +94,12 @@
                 <input class="form-control" asp-for="ProductionYear" placeholder="Rok produkcji..." min="1900" max="@DateTime.Today.Year" />
             </div>
 
+            <div class="form-group">
+                <label asp-for="VehicleEquipment"></label>
+                <span class="text-danger" asp-validation-for="VehicleEquipment"></span>
+                <select class="form-control" asp-for="VehicleEquipment" asp-items="@Model.AvailableEquipment" multiple></select>
+            </div>
+
             <div class="separator"></div>
 
             <div class="form-group">

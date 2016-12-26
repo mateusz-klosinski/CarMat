@@ -38,6 +38,8 @@ namespace CarMat.ViewModels
 
         public string VehicleBrand { get; set; }
 
+        public List<string> VehicleEquipment { get; set; }
+
 
 
 

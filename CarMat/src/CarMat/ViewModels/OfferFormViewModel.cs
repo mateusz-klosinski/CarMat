@@ -1,4 +1,5 @@
 ﻿using CarMat.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,53 +13,73 @@ namespace CarMat.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(50)]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
+        [MaxLength(50, ErrorMessage = "Maksymalna długość pola {0} wynosi {1}")]
         [Display(Name = "Tytuł ogłoszenia")]
         public string Title { get; set; }
 
-        public DateTime DateAdded { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Data zakończenia oferty")]
+        [ValidOfferTime(MaxDaysDuration = 14, WrongDateMessage = "Data musi być z zakresu od jutra do czternastu dni od dzisiaj.")]
         public DateTime DateFinished { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Cena")]
         public string Price { get; set; }
 
-        [Required]
-        [MaxLength(5000)]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
+        [MaxLength(5000, ErrorMessage = "Maksymalna długość pola {0} wynosi {1}")]
         [Display(Name = "Opis")]
         public string Description { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Rok produkcji")]
+        [Range(1900, 2017, ErrorMessage = "Pole {0} musi być z zakresu od {1} do {2}")]
         public int ProductionYear { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Przebieg")]
+        [Range(0, 5000000, ErrorMessage = "Pole {0} musi być z zakresu od {1} do {2}")]
         public int Mileage { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Pojemność silnika")]
+        [Range(0, 100000, ErrorMessage = "Pole {0} musi być z zakresu od {1} do {2}")]
         public int EngineCapacity { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Uszkodzenia")]
         public bool isDamaged { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Zarejestrowany w Polsce")]
         public bool isRegistered { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Model")]
         public string VehicleModel { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Marka")]
         public string VehicleBrand { get; set; }
+
+
+        [Display(Name = "Wyposażenie")]
+        public List<string> VehicleEquipment { get; set; }
+
+        public MultiSelectList AvailableEquipment { get; set; }
 
         public string Action { get; set; }
 

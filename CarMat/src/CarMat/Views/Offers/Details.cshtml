@@ -50,8 +50,6 @@
             <p>Przebieg: <b>@Model.Mileage km</b></p>
             <p>Uszkodzony: <b>@( Model.isDamaged == true ? "TAK" : "NIE" )</b> </p>
             <p>Zarejestrowany w Polsce: <b>@( Model.isRegistered == true ? "TAK" : "NIE" )</b> </p>
-            <h1>Opis</h1>
-            <p>@Model.Description</p>
         </div>
 
         <div class="col-md-4 details-user">
@@ -61,6 +59,26 @@
             <p>Email: @Model.Email</p>
             <h6>Dodano: <b>@Model.DateAdded.Date.ToString("dd-MM-yyyy")</b></h6>
             <h6>Data zakończenia: <b>@Model.DateFinished.Date.ToString("dd-MM-yyyy")</b></h6>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="text-center col-md-10 col-md-offset-1">
+            <h1>Wyposażenie</h1>
+            @if (Model.VehicleEquipment.Any())
+            {
+                @foreach (var equipment in Model.VehicleEquipment)
+                {
+                    <span>@equipment@(Model.VehicleEquipment.LastOrDefault().Equals(equipment) ? "" : ", ")</span>
+                }
+            }
+            else
+            {
+                <p>Brak wyposażenia</p>
+            }
+
+            <h1>Opis</h1>
+            <p>@Model.Description</p>
         </div>
     </div>
 </section>
