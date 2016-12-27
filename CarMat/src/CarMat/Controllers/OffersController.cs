@@ -27,6 +27,8 @@ namespace CarMat.Controllers
             var offer = _context.Offers
                 .Include(o => o.Vehicle)
                 .Include(o => o.User)
+                .Include(o => o.User.Demographics)
+                .Include(o => o.User.Demographics.Province)
                 .Include(o => o.Vehicle.Model)
                 .Include(o => o.Vehicle.Model.Brand)
                 .Include(o => o.Vehicle.VehicleVehicleEquipment)
@@ -46,6 +48,8 @@ namespace CarMat.Controllers
                     ProductionYear = o.Vehicle.ProductionYear,
                     Title = o.Title,
                     UserName = o.User.UserName,
+                    City = o.User.Demographics.City,
+                    Province = o.User.Demographics.Province.Name,
                     VehicleBrand = o.Vehicle.Model.Brand.Name,
                     VehicleModel = o.Vehicle.Model.Name,
 

@@ -2,6 +2,7 @@
 using CarMat.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,15 @@ namespace CarMat.Controllers
 {
     public class AuthController : Controller
     {
+        private CMContext _context;
         private SignInManager<CMUser> _manager;
         private UserManager<CMUser> _userManager;
 
-        public AuthController(SignInManager<CMUser> manager, UserManager<CMUser> userManager)
+        public AuthController(SignInManager<CMUser> manager, UserManager<CMUser> userManager, CMContext context)
         {
             _manager = manager;
             _userManager = userManager;
+            _context = context;
         }
 
         public IActionResult Login()
@@ -40,7 +43,7 @@ namespace CarMat.Controllers
 
                 if (loginResult.Succeeded)
                 {
-                    if (String.IsNullOrWhiteSpace(redirectUrl))
+                    if (string.IsNullOrWhiteSpace(redirectUrl))
                     {
                         return RedirectToAction("Index", "Home");
                     }
@@ -77,10 +80,30 @@ namespace CarMat.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userDemographics = _context.Demographics
+                    .Where(d => d.City.Equals(viewModel.City, StringComparison.CurrentCultureIgnoreCase) &&
+                    d.Province.Name.Equals(viewModel.Province, StringComparison.CurrentCultureIgnoreCase))
+                    .FirstOrDefault();
+
+                if (userDemographics == null)
+                {
+                    var userProvince = _context.Provinces
+                        .Where(p => p.Name
+                        .Equals(viewModel.Province, StringComparison.CurrentCultureIgnoreCase))
+                        .FirstOrDefault();
+
+                    userDemographics = new Demographics
+                    {
+                        City = viewModel.City,
+                        Province = userProvince
+                    };
+                }
+
                 var newUser = new CMUser
                 {
                     UserName = viewModel.UserName,
-                    Email = viewModel.Email
+                    Email = viewModel.Email,
+                    Demographics = userDemographics
                 };
 
                 var creationResult = await _userManager.CreateAsync(newUser, viewModel.Password);

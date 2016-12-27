@@ -5,9 +5,16 @@
     ViewData["Title"] = "Rejestracja";
 }
 
+@section stylesheets{
+    <link rel="stylesheet" href="~/lib/jquery-ui/themes/base/jquery-ui.css" />
+}
+
 @section scripts{
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyBR0-REpPErJqc3ySdBGfZfz9Mal2sdZ5U&libraries=places&region=PL"></script>
+    <script src="~/js/register.js"></script>
 }
 
 
@@ -20,23 +27,36 @@
 
 <div class="row">
     <form method="post" class="col-md-4 col-md-offset-4" novalidate>
+
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
         <div class="form-group">
-            <label asp-for="Email">Adres e-mail</label>
+            <label asp-for="Email"></label>
             <input type="text" asp-for="Email" class="form-control" />
             <span class="text-danger" asp-validation-for="Email"></span>
         </div>
         <div class="form-group">
-            <label asp-for="UserName">Nazwa użytkownika</label>
+            <label asp-for="UserName"></label>
             <input type="text" asp-for="UserName" class="form-control" />
             <span class="text-danger" asp-validation-for="UserName"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Password">Hasło</label>
+            <label asp-for="Password"></label>
             <input type="password" asp-for="Password" class="form-control" />
             <span class="text-danger" asp-validation-for="Password"></span>
         </div>
 
-        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label asp-for="City"></label>
+            <input asp-for="City" class="form-control" />
+            <span class="text-danger" asp-validation-for="City"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Province"></label>
+            <input asp-for="Province" class="form-control" />
+            <span class="text-danger" asp-validation-for="Province"></span>
+        </div>
 
         <div class="form-group">
             <input type="submit" class="btn btn-success" />

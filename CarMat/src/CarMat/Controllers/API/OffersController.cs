@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarMat.Controllers.API
 {
-    [Route("api")]
+    [Route("api/Offers")]
     public class OffersController : Controller
     {
         private CMContext _context;
