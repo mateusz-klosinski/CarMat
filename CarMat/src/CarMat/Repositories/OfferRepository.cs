@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarMat.Repositories
 {
-    public class OfferRepository
+    public class OfferRepository : IOfferRepository
     {
         private CMContext _context;
 

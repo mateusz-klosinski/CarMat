@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarMat.Repositories
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private CMContext _context;
 

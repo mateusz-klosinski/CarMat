@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarMat.Services
+namespace CarMat.Models
 {
     public class CarMatDataSeeder
     {

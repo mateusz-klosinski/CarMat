@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarMat.Repositories
 {
-    public class VehicleModelRepository
+    public class VehicleModelRepository : IVehicleModelRepository
     {
         private CMContext _context;
 

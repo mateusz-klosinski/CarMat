@@ -12,9 +12,9 @@ namespace CarMat.Controllers
 {
     public class HomeController : Controller
     {
-        private UnitOfWork _unitOfWork;
+        private IUnitOfWork _unitOfWork;
 
-        public HomeController(UnitOfWork unitOfWork)
+        public HomeController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

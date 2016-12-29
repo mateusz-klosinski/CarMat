@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace CarMat.Repositories
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private CMContext _context;
 
-        public OfferRepository Offers { get; private set; }
-        public UserRepository Users { get; private set; }
-        public VehicleEquipmentRepository Equipment { get; private set; }
-        public VehicleModelRepository Models { get; private set; }
+        public IOfferRepository Offers { get; private set; }
+        public IUserRepository Users { get; private set; }
+        public IVehicleEquipmentRepository Equipment { get; private set; }
+        public IVehicleModelRepository Models { get; private set; }
 
 
         public UnitOfWork(CMContext context)

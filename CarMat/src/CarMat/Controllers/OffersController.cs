@@ -15,10 +15,10 @@ namespace CarMat.Controllers
 {
     public class OffersController : Controller
     {
-        private UnitOfWork _unitOfWork;
+        private IUnitOfWork _unitOfWork;
 
 
-        public OffersController(UnitOfWork unitOfWork)
+        public OffersController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
