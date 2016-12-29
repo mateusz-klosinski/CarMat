@@ -6,32 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 using CarMat.Models;
 using Microsoft.EntityFrameworkCore;
 using CarMat.ViewModels;
+using CarMat.Repositories;
 
 namespace CarMat.Controllers
 {
     public class HomeController : Controller
     {
-        private CMContext _context;
+        private UnitOfWork _unitOfWork;
 
-        public HomeController(CMContext context)
+        public HomeController(UnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            var offersWithVehicles = _context.Offers
-                .Include(o => o.Vehicle)
-                .Where(o => o.DateFinished > DateTime.Today)
-                .Select(o => new SimpleOfferViewModel
-                {
-                    EngineCapacity = o.Vehicle.EngineCapacity,
-                    Id = o.Id,
-                    Mileage = o.Vehicle.Mileage,
-                    Price = o.Price,
-                    ProductionYear = o.Vehicle.ProductionYear,
-                    Title = o.Title
-                })
-                .ToList();
+            var offersWithVehicles = _unitOfWork.Offers.GetFutureOffers();
 
             return View(offersWithVehicles);
         }

@@ -34,7 +34,7 @@ namespace CarMat.Models
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSqlServer(_config["ConnectionStrings:Database"]);
+            optionsBuilder.UseSqlServer(_config["ConnectionStrings:AzureDatabase"]);
 
         }
 

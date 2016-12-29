@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using CarMat.Services;
 using Newtonsoft.Json.Serialization;
+using CarMat.Repositories;
 
 namespace CarMat
 {
@@ -46,6 +47,7 @@ namespace CarMat
             services.AddTransient<CarMatDataSeeder>();
 
             services.AddDbContext<CMContext>();
+            services.AddSingleton<UnitOfWork>();
 
             services.AddIdentity<CMUser, IdentityRole>(config =>
             {
