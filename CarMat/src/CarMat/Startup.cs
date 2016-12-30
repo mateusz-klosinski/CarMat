@@ -49,6 +49,7 @@ namespace CarMat
 
             services.AddDbContext<CMContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<IOfferService, OfferService>();
             services.AddScoped<IAuthService, AuthService>();
 
@@ -78,7 +79,6 @@ namespace CarMat
                     }
                 };
             }).AddEntityFrameworkStores<CMContext>();
-
             services.AddTransient<IdentityErrorDescriber, CMIdentityErrorDescriber>();
 
             services.AddMvc()

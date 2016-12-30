@@ -2,6 +2,15 @@
 
 (function () {
 
+    $(window).on("scroll", function () {
+        if ($(document).scrollTop() > 50) {
+            $('nav').addClass("shrink");
+        }
+        else {
+            $('nav').removeClass("shrink");
+        }
+    });
+
     //fit text functions for most popular offers
     $(".top-vehicles li .bottom-description h2").each(function () {
         $(this).fitText(1.5);

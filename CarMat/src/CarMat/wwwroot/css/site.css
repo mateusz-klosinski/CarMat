@@ -1,7 +1,9 @@
 ﻿body {
+    padding-top: 150px;
     font-family: 'Lato', sans-serif;
     position: relative;
     font-size: 14px;
+    z-index: 0;
 }
 
 /* Navbar */
@@ -9,13 +11,17 @@
 .navbar{
     margin-bottom: 0;
     padding: 25px 15px;
+    z-index: 1;
 }
 
 .navbar-default {
     border: none;
     border-radius: 0;
-    background-color: #dcdcdc;
-    border-bottom: 0.5px solid rgba(149, 206, 239, 0.7);
+    background-color: white;
+}
+
+.navbar-default.shrink{
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 /* Navbar logo */
@@ -33,6 +39,7 @@
 .navbar .navbar-brand:hover{
     color:#0088b3;
     transform: scale(1.1);
+
 }
 
 .navbar .navbar-brand i{
@@ -65,6 +72,7 @@
 
 .navbar-collapse .navbar-right li{
     font-size: 130%;
+    z-index: 100;
 }
 
 .navbar-collapse .navbar-right li a{
@@ -80,6 +88,23 @@
 
 
 /* search form */
+
+.search-form{
+    position: fixed;
+    left: 330px;
+    top: 25px;
+    z-index: 1;
+    width: 30%;
+}
+
+@media (max-width: 1200px)
+{
+    .search-form{
+        position: static;
+        width: 100%;
+        z-index: 0;
+    }
+}
 
 .search-form input[type=text], span.input-group-btn .btn{
     height: 50px;
@@ -101,9 +126,10 @@
     position: relative;
     border-bottom: none;
     margin: 0;
-    margin: 10px 0;
+    margin: 0 0 10px 0;
     transition: color 0.5s;
     box-shadow: 0 7px 5px 0 rgba(0,0,0,0.2);
+    background-color: white;
 }
 
 .page-header:hover{
@@ -221,9 +247,8 @@
 /* offers */
 
 .offers{
-    background-color: white;
     position: relative;
-    z-index: 1;
+    z-index: 0;
 }
 
 .offer{
