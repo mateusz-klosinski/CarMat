@@ -4,10 +4,10 @@
 
     $(window).on("scroll", function () {
         if ($(document).scrollTop() > 50) {
-            $('nav').addClass("shrink");
+            $('nav, .search-form').addClass("shrink");
         }
         else {
-            $('nav').removeClass("shrink");
+            $('nav, .search-form').removeClass("shrink");
         }
     });
 

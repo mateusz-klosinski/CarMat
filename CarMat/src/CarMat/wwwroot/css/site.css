@@ -6,22 +6,30 @@
     z-index: 0;
 }
 
-/* Navbar */
+/* Navbar and footer */
 
 .navbar{
     margin-bottom: 0;
     padding: 25px 15px;
     z-index: 1;
+    transition: all 0.5s;
+}
+
+footer .navbar{
+    background-color: #cacaca;
 }
 
 .navbar-default {
     border: none;
     border-radius: 0;
     background-color: white;
+    z-index: 1;
 }
 
 .navbar-default.shrink{
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(202, 202, 202, 0.9);
+    height: 85px;
+    padding: 10px;
 }
 
 /* Navbar logo */
@@ -92,24 +100,56 @@
 .search-form{
     position: fixed;
     left: 330px;
-    top: 25px;
+    top: 35px;
     z-index: 1;
     width: 30%;
+    transition: all 0.5s;
+}
+
+.search-form.shrink{
+    top: 20px;
 }
 
 @media (max-width: 1200px)
 {
     .search-form{
         position: static;
-        width: 100%;
+        width: auto;
+        margin: 0 5px;
+        z-index: 0;
+    }
+
+    .search-form .input-group{
         z-index: 0;
     }
 }
 
 .search-form input[type=text], span.input-group-btn .btn{
     height: 50px;
-    font-size: 20px;
     border-radius: 0;
+    transition: all .5s;
+}
+
+.search-form span.input-group-btn .btn i{
+    transition: all .5s;
+}
+
+.search-form span.input-group-btn:hover .btn i{
+    transform: scale(1.4);
+}
+
+.search-form .form-control:focus{
+    box-shadow: none;
+    background-color:rgba(0, 136, 179, 0.5);
+    color: white; 
+}
+
+.search-form input[type=text]::-webkit-input-placeholder{
+    transition: all .75s ease-in;
+}
+
+.search-form input[type=text]:focus::-webkit-input-placeholder{
+    color: white;
 }
 
 .search-form span button{
@@ -126,7 +166,7 @@
     position: relative;
     border-bottom: none;
     margin: 0;
-    margin: 0 0 10px 0;
+    margin: 10px 0;
     transition: color 0.5s;
     box-shadow: 0 7px 5px 0 rgba(0,0,0,0.2);
     background-color: white;
