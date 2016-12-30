@@ -1,4 +1,5 @@
 ﻿using CarMat.Models;
+using CarMat.Services;
 using CarMat.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,15 +14,12 @@ namespace CarMat.Controllers
 {
     public class AuthController : Controller
     {
-        private CMContext _context;
-        private SignInManager<CMUser> _manager;
-        private UserManager<CMUser> _userManager;
+        private IAuthService _service;
 
-        public AuthController(SignInManager<CMUser> manager, UserManager<CMUser> userManager, CMContext context)
+
+        public AuthController(IAuthService service)
         {
-            _manager = manager;
-            _userManager = userManager;
-            _context = context;
+            _service = service;
         }
 
         public IActionResult Login()
@@ -39,9 +37,9 @@ namespace CarMat.Controllers
         {
             if (ModelState.IsValid)
             {
-                var loginResult = await _manager.PasswordSignInAsync(viewModel.UserName, viewModel.Password, true, false);
+                var isLoggedIn = await _service.SignInUserAsync(viewModel.UserName, viewModel.Password);
 
-                if (loginResult.Succeeded)
+                if (isLoggedIn)
                 {
                     if (string.IsNullOrWhiteSpace(redirectUrl))
                     {
@@ -64,7 +62,7 @@ namespace CarMat.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                await _manager.SignOutAsync();
+                await _service.SignOutUserAsync();
             }
 
             return RedirectToAction("Index", "Home");
@@ -80,33 +78,7 @@ namespace CarMat.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userDemographics = _context.Demographics
-                    .Where(d => d.City.Equals(viewModel.City, StringComparison.CurrentCultureIgnoreCase) &&
-                    d.Province.Name.Equals(viewModel.Province, StringComparison.CurrentCultureIgnoreCase))
-                    .FirstOrDefault();
-
-                if (userDemographics == null)
-                {
-                    var userProvince = _context.Provinces
-                        .Where(p => p.Name
-                        .Equals(viewModel.Province, StringComparison.CurrentCultureIgnoreCase))
-                        .FirstOrDefault();
-
-                    userDemographics = new Demographics
-                    {
-                        City = viewModel.City,
-                        Province = userProvince
-                    };
-                }
-
-                var newUser = new CMUser
-                {
-                    UserName = viewModel.UserName,
-                    Email = viewModel.Email,
-                    Demographics = userDemographics
-                };
-
-                var creationResult = await _userManager.CreateAsync(newUser, viewModel.Password);
+                var creationResult = await _service.CreateUserAsync(viewModel);
 
                 if (creationResult.Succeeded)
                 {

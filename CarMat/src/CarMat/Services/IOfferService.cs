@@ -5,7 +5,7 @@ namespace CarMat.Services
 {
     public interface IOfferService
     {
-        void AddAvailableEquipmentToOfffer(OfferFormViewModel offer);
+        void AddAvailableEquipmentToOffer(OfferFormViewModel offer);
         OfferFormViewModel CreateEmptyOfferWithAvailableEquipment();
         void CreateNewOffer(string username, OfferFormViewModel model);
         OfferDetailsViewModel GetOfferDetails(int offerId);

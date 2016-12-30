@@ -69,7 +69,7 @@ namespace CarMat.Controllers
             }
             else
             {
-                _service.AddAvailableEquipmentToOfffer(model);
+                _service.AddAvailableEquipmentToOffer(model);
                 return View(model);
             }
         }
@@ -81,7 +81,7 @@ namespace CarMat.Controllers
             var username = User.Identity.Name;
 
             var offerToEdit = _service.GetOfferToEditForUser(offerId, username);
-            _service.AddAvailableEquipmentToOfffer(offerToEdit);
+            _service.AddAvailableEquipmentToOffer(offerToEdit);
 
             if (offerToEdit != null)
             {

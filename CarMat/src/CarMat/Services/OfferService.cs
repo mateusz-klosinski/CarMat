@@ -50,7 +50,7 @@ namespace CarMat.Services
             return _unitOfWork.Offers.GetOfferToEditForUser(username, offerId);
         }
 
-        public void AddAvailableEquipmentToOfffer(OfferFormViewModel offer)
+        public void AddAvailableEquipmentToOffer(OfferFormViewModel offer)
         {
             offer.AvailableEquipment = _unitOfWork.Equipment.GetAvailableEquipmentNames();
         }

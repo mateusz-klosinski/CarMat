@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Newtonsoft.Json.Serialization;
 using CarMat.Repositories;
 using CarMat.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace CarMat
 {
@@ -49,6 +50,7 @@ namespace CarMat
             services.AddDbContext<CMContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IOfferService, OfferService>();
+            services.AddScoped<IAuthService, AuthService>();
 
             services.AddIdentity<CMUser, IdentityRole>(config =>
             {
@@ -57,6 +59,7 @@ namespace CarMat
                 config.Password.RequireLowercase = false;
                 config.Password.RequireUppercase = false;
                 config.Password.RequiredLength = 5;
+                config.User.RequireUniqueEmail = true;
 
                 config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
                 config.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
@@ -75,6 +78,8 @@ namespace CarMat
                     }
                 };
             }).AddEntityFrameworkStores<CMContext>();
+
+            services.AddTransient<IdentityErrorDescriber, CMIdentityErrorDescriber>();
 
             services.AddMvc()
                 .AddJsonOptions(config => 
