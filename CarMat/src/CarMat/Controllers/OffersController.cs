@@ -1,5 +1,6 @@
 ﻿using CarMat.Models;
 using CarMat.Repositories;
+using CarMat.Services;
 using CarMat.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,19 +16,18 @@ namespace CarMat.Controllers
 {
     public class OffersController : Controller
     {
-        private IUnitOfWork _unitOfWork;
+        private IOfferService _service;
 
 
-        public OffersController(IUnitOfWork unitOfWork)
+        public OffersController(IOfferService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
         }
 
         [Route("Offers/Details/{offerId}")]
         public IActionResult Details(int offerId)
         {
-            var offer = _unitOfWork.Offers.GetDetailsForOffer(offerId);
-
+            var offer = _service.GetOfferDetails(offerId);
 
             if (offer != null)
             {
@@ -42,7 +42,7 @@ namespace CarMat.Controllers
         {
             var username = User.Identity.Name;
 
-            var offers = _unitOfWork.Offers.GetOffersWhichBelongsToUser(username);
+            var offers = _service.GetOffersWhichBelongsToUser(username);
 
             return View(offers);
         }
@@ -50,11 +50,7 @@ namespace CarMat.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            OfferFormViewModel offer = new OfferFormViewModel
-            {
-                Action = "Create",
-                AvailableEquipment = _unitOfWork.Equipment.GetAvailableEquipmentNames()
-            };
+            OfferFormViewModel offer = _service.CreateEmptyOfferWithAvailableEquipment();
 
             return View(offer);
         }
@@ -67,57 +63,13 @@ namespace CarMat.Controllers
             {
                 var username = User.Identity.Name;
 
-                var user = _unitOfWork.Users.GetUserIncludingHisOffers(username);
-
-                var vehicleModel = _unitOfWork.Models.GetVehicleModel(model.VehicleModel);
-
-                List<VehicleEquipment> equipmentForVehicle = null;
-                if (model.VehicleEquipment != null)
-                {
-                    equipmentForVehicle = _unitOfWork.Equipment.GetEquipmentMatchGivenNames(model.VehicleEquipment);
-                }
-
-
-                Offer offer = new Offer
-                {
-                    User = user,
-                    DateAdded = DateTime.Today,
-                    DateFinished = model.DateFinished,
-                    Description = model.Description,
-                    Price = decimal.Parse(model.Price),
-                    Title = model.Title,
-                    Vehicle = new Vehicle
-                    {
-                        EngineCapacity = model.EngineCapacity,
-                        isDamaged = model.isDamaged,
-                        isRegistered = model.isRegistered,
-                        Mileage = model.Mileage,
-                        Model = vehicleModel,
-                        ProductionYear = model.ProductionYear,
-                        VehicleVehicleEquipment = new List<VehicleVehicleEquipment>(),
-                    }
-                };
-
-                if (equipmentForVehicle != null)
-                {
-                    equipmentForVehicle
-                        .ForEach(efv => offer.Vehicle.VehicleVehicleEquipment
-                        .Add(new VehicleVehicleEquipment
-                        {
-                            Vehicle = offer.Vehicle,
-                            Equipment = efv,
-                        }));
-                }
-
-
-                _unitOfWork.Offers.CreateNewOfferForUser(user, offer);
-                _unitOfWork.Complete();
+                _service.CreateNewOffer(username, model);
 
                 return RedirectToAction("Mine");
             }
             else
             {
-                model.AvailableEquipment = _unitOfWork.Equipment.GetAvailableEquipmentNames();
+                _service.AddAvailableEquipmentToOfffer(model);
                 return View(model);
             }
         }
@@ -128,8 +80,8 @@ namespace CarMat.Controllers
         {
             var username = User.Identity.Name;
 
-            var offerToEdit = _unitOfWork.Offers.GetOfferToEditForUser(username, offerId);
-            offerToEdit.AvailableEquipment = _unitOfWork.Equipment.GetAvailableEquipmentNames();
+            var offerToEdit = _service.GetOfferToEditForUser(offerId, username);
+            _service.AddAvailableEquipmentToOfffer(offerToEdit);
 
             if (offerToEdit != null)
             {
@@ -148,57 +100,8 @@ namespace CarMat.Controllers
             {
                 var username = User.Identity.Name;
 
-                var offer = _unitOfWork.Offers.GetOfferForUser(offerId, username);
+                _service.UpdateOfferForUser(offerId, username, model);
 
-                List<VehicleEquipment> equipmentForVehicle = null;
-                if (model.VehicleEquipment != null)
-                {
-                    equipmentForVehicle = _unitOfWork.Equipment.GetEquipmentMatchGivenNames(model.VehicleEquipment);
-                }
-
-
-
-                if (offer != null)
-                {
-                    offer.Price = decimal.Parse(model.Price);
-                    offer.Title = model.Title;
-                    offer.Vehicle.EngineCapacity = model.EngineCapacity;
-                    offer.Vehicle.isDamaged = model.isDamaged;
-                    offer.Vehicle.isRegistered = model.isRegistered;
-                    offer.Vehicle.Mileage = model.Mileage;
-                    offer.Vehicle.Model = _unitOfWork.Models.GetVehicleModel(model.VehicleModel);
-                    offer.Vehicle.ProductionYear = model.ProductionYear;
-
-                    if (equipmentForVehicle != null)
-                    {
-                        foreach (var equipment in equipmentForVehicle)
-                        {
-                            if (!offer.Vehicle.VehicleVehicleEquipment.Any(ve => ve.EquipmentId == equipment.Id))
-                            {
-                                var newEquipment = new VehicleVehicleEquipment
-                                {
-                                    Vehicle = offer.Vehicle,
-                                    Equipment = equipment,
-                                };
-
-                                _unitOfWork.Equipment.CreateNewVehicleEquipmentForVehicle(newEquipment, offer.Vehicle);
-                            }
-                        }
-
-                        foreach (var equipment in offer.Vehicle.VehicleVehicleEquipment.ToList())
-                        {
-                            if (!equipmentForVehicle.Any(e => e.Id == equipment.EquipmentId))
-                            {
-                                _unitOfWork.Equipment.RemoveVehicleEquipmentFromVehicle(equipment, offer.Vehicle);
-                            }
-                        }
-                    }
-
-
-                    _unitOfWork.Offers.UpdateOffer(offer);
-                    _unitOfWork.Complete();
-
-                }
                 return RedirectToAction("Mine");
             }
             else
@@ -212,14 +115,8 @@ namespace CarMat.Controllers
         {
             var username = User.Identity.Name;
 
-            var offer = _unitOfWork.Offers.GetOfferForUser(offerId, username);
+            _service.DeleteOfferForUser(offerId, username);
 
-            if (offer != null)
-            {
-                _unitOfWork.Offers.DeleteOffer(offer);
-                _unitOfWork.Complete();
-                return RedirectToAction("Mine");
-            }
             return RedirectToAction("Mine");
         }
     }

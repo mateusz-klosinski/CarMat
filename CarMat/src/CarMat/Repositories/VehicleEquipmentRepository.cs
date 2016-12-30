@@ -17,7 +17,7 @@ namespace CarMat.Repositories
             _context = context;
         }
 
-        public void CreateNewVehicleEquipmentForVehicle(VehicleVehicleEquipment newEquipment, Vehicle vehicle)
+        public void AddNewVehicleEquipmentToVehicle(VehicleVehicleEquipment newEquipment, Vehicle vehicle)
         {
             vehicle.VehicleVehicleEquipment.Add(newEquipment);
             _context.VehicleVehicleEquipment.Add(newEquipment);

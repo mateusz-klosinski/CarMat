@@ -35,7 +35,7 @@ namespace CarMat.Repositories
             _context.Remove(offer);
         }
 
-        public OfferDetailsViewModel GetDetailsForOffer(int offerId)
+        public OfferDetailsViewModel GetOfferDetails(int offerId)
         {
             return _context.Offers
                 .Include(o => o.Vehicle)
