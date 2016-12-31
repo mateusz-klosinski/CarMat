@@ -27,9 +27,9 @@ footer .navbar{
 }
 
 .navbar-default.shrink{
-    background-color: rgba(202, 202, 202, 0.9);
-    height: 85px;
-    padding: 10px;
+    background-color: rgba(202, 202, 202, 0.95);
+    height: 60px;
+    padding: 5px;
 }
 
 /* Navbar logo */
@@ -48,6 +48,10 @@ footer .navbar{
     color:#0088b3;
     transform: scale(1.1);
 
+}
+
+.navbar.shrink .navbar-brand{
+    transform: scale(0.7) translateY(-15px);
 }
 
 .navbar .navbar-brand i{
@@ -107,7 +111,8 @@ footer .navbar{
 }
 
 .search-form.shrink{
-    top: 20px;
+    top: 5px;
+    left: 250px;
 }
 
 @media (max-width: 1200px)
