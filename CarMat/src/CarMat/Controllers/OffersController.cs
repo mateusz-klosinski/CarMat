@@ -48,6 +48,16 @@ namespace CarMat.Controllers
         }
 
         [Authorize]
+        public IActionResult Watched()
+        {
+            var username = User.Identity.Name;
+
+            var offers = _service.GetOffersWatchedByUser(username);
+
+            return View(offers);
+        }
+
+        [Authorize]
         public IActionResult Create()
         {
             OfferFormViewModel offer = _service.CreateEmptyOfferWithAvailableEquipment();

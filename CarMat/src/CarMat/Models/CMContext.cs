@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CarMat.Models
 {
@@ -22,6 +23,7 @@ namespace CarMat.Models
         public DbSet<VehicleModel> VehicleModels { get; set; }
         public DbSet<VehicleEquipment> VehicleEquipments { get; set; }
         public DbSet<VehicleVehicleEquipment> VehicleVehicleEquipment { get; set; }
+        public DbSet<Watch> Watches { get; set; }
 
 
 
@@ -50,6 +52,11 @@ namespace CarMat.Models
 
             modelBuilder.Entity<VehicleVehicleEquipment>()
                 .HasKey(vve => new { vve.VehicleId, vve.EquipmentId });
+
+            modelBuilder.Entity<Watch>()
+                .HasOne(w => w.Watcher)
+                .WithMany(u => u.Watches)
+                .IsRequired(false);
         }
 
     }

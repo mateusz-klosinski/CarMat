@@ -33,6 +33,10 @@ namespace CarMat.Services
             return _unitOfWork.Offers.GetOffersWhichBelongsToUser(username);
         }
 
+        public List<SimpleOfferViewModel> GetOffersWatchedByUser(string username)
+        {
+            return _unitOfWork.Offers.GetOffersWatchedByUser(username);
+        }
 
 
         public OfferFormViewModel CreateEmptyOfferWithAvailableEquipment()
@@ -202,6 +206,7 @@ namespace CarMat.Services
                 _unitOfWork.Complete();
             }
         }
+
 
     }
 }

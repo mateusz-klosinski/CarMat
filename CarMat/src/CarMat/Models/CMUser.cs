@@ -11,6 +11,8 @@ namespace CarMat.Models
     {
         public ICollection<Offer> Offers { get; set; }
 
+        public ICollection<Watch> Watches { get; set; }
+
         public int DemographicsId { get; set; }
 
         public Demographics Demographics { get; set; }

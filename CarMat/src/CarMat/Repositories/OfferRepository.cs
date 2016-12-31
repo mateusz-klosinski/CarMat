@@ -110,6 +110,29 @@ namespace CarMat.Repositories
                 .ToList();
         }
 
+        public List<SimpleOfferViewModel> GetOffersWatchedByUser(string username)
+        {
+            var user = _context.Users
+                .Where(u => u.UserName.Equals(username))
+                .FirstOrDefault();
+
+            return _context.Watches
+                .Where(w => w.WatcherId.Equals(user.Id))
+                .Include(w => w.WatchedOffer)
+                .Select(w => w.WatchedOffer)
+                .Select(o => new SimpleOfferViewModel
+                {
+                    EngineCapacity = o.Vehicle.EngineCapacity,
+                    Id = o.Id,
+                    Mileage = o.Vehicle.Mileage,
+                    Price = o.Price,
+                    ProductionYear = o.Vehicle.ProductionYear,
+                    Title = o.Title,
+                    DateFinished = o.DateFinished,
+                })
+                .ToList();
+        }
+
         public Offer GetOfferForUser(int offerId, string username)
         {
             return _context.Offers

@@ -8,9 +8,10 @@ using CarMat.Models;
 namespace CarMat.Migrations
 {
     [DbContext(typeof(CMContext))]
-    partial class CMContextModelSnapshot : ModelSnapshot
+    [Migration("20161231121613_AddedWatches")]
+    partial class AddedWatches
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -221,7 +222,7 @@ namespace CarMat.Migrations
 
                     b.HasIndex("WatcherId");
 
-                    b.ToTable("Watches");
+                    b.ToTable("Watch");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
