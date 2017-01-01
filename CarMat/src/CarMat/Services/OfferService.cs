@@ -124,6 +124,7 @@ namespace CarMat.Services
         {
             offer.Price = decimal.Parse(model.Price);
             offer.Title = model.Title;
+            offer.DateFinished = model.DateFinished;
 
             _vehicleService.UpdateExistingOffersVehicle(model, offer);
         }

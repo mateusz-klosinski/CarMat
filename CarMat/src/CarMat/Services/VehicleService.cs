@@ -68,7 +68,11 @@ namespace CarMat.Services
         public void UpdateExistingOffersVehicle(OfferFormViewModel model, Offer offer)
         {
             updateVehicleWithoutEquipment(model, offer);
-            updateVehicleEquipment(model.VehicleEquipment, offer);
+
+            if (model.VehicleEquipment != null)
+            {
+                updateVehicleEquipment(model.VehicleEquipment, offer);
+            }
         }
 
         private void updateVehicleWithoutEquipment(OfferFormViewModel model, Offer offer)
