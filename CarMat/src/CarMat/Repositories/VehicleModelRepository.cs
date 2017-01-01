@@ -23,5 +23,27 @@ namespace CarMat.Repositories
                     .Equals(vehicleModelName))
                     .FirstOrDefault();
         }
+
+        public List<string> GetAllVehicleBrandNames()
+        {
+            return _context.VehicleBrands
+                .Select(vb => vb.Name)
+                .ToList();
+        }
+
+        public VehicleBrand GetBrandByName(string brandName)
+        {
+            return _context.VehicleBrands
+                .Where(b => b.Name.Equals(brandName))
+                .FirstOrDefault();
+        }
+
+        public List<string> GetVehicleModelNames(int brandId)
+        {
+            return _context.VehicleModels
+                    .Where(m => m.BrandId == brandId)
+                    .Select(m => m.Name)
+                    .ToList();
+        }
     }
 }

@@ -17,10 +17,19 @@ namespace CarMat.Repositories
             _context = context;
         }
 
+        public CMUser GetUserByName(string username)
+        {
+            return _context.Users
+                .Include(o => o.Watches)
+                .Where(u => u.UserName.Equals(username))
+                .FirstOrDefault();
+        }
+
         public CMUser GetUserIncludingHisOffers(string username)
         {
             return _context.Users
                     .Include(u => u.Offers)
+                    .Include(u => u.Watches)
                     .Where(u => u.UserName
                     .Equals(username))
                     .FirstOrDefault();

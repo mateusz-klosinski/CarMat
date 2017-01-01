@@ -1,4 +1,5 @@
 ﻿using CarMat.Models;
+using System.Collections.Generic;
 
 namespace CarMat.Repositories
 {
@@ -6,5 +7,6 @@ namespace CarMat.Repositories
     {
         Demographics GetDemographicsByCityAndProvinceName(string city, string province);
         Province GetProvinceByName(string province);
+        List<string> GetAllProvincesName();
     }
 }

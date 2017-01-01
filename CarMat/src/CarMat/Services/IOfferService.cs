@@ -14,5 +14,6 @@ namespace CarMat.Services
         void UpdateOfferForUser(int offerId, string username, OfferFormViewModel model);
         void DeleteOfferForUser(int offerId, string username);
         List<SimpleOfferViewModel> GetOffersWatchedByUser(string username);
+        void AddNewWatch(int offerId, string username);
     }
 }

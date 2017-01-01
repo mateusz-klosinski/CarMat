@@ -12,16 +12,14 @@ namespace CarMat.ViewModels
 
 
         public string Title { get; set; }
-
         public decimal Price { get; set; }
-
         public int ProductionYear { get; set; }
-
         public int Mileage { get; set; }
-
         public int EngineCapacity { get; set; }
-
         public DateTime DateFinished { get; set;}
+
+        public bool IsWatched { get; set; }
+        public bool BelongsToCurrentUser { get; set; }
 
     }
 }

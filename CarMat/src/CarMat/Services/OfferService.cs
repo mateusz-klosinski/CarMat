@@ -13,10 +13,14 @@ namespace CarMat.Services
     public class OfferService : IOfferService
     {
         private IUnitOfWork _unitOfWork;
+        private IVehicleService _vehicleService;
+        private IWatchService _watchService;
 
-        public OfferService(IUnitOfWork unitOfWork)
+        public OfferService(IUnitOfWork unitOfWork, IVehicleService vehicleService, IWatchService watchService)
         {
             _unitOfWork = unitOfWork;
+            _vehicleService = vehicleService;
+            _watchService = watchService;
         }
 
 
@@ -33,10 +37,14 @@ namespace CarMat.Services
             return _unitOfWork.Offers.GetOffersWhichBelongsToUser(username);
         }
 
+
+
         public List<SimpleOfferViewModel> GetOffersWatchedByUser(string username)
         {
             return _unitOfWork.Offers.GetOffersWatchedByUser(username);
         }
+
+
 
 
         public OfferFormViewModel CreateEmptyOfferWithAvailableEquipment()
@@ -49,15 +57,28 @@ namespace CarMat.Services
         }
 
 
+
+
         public OfferFormViewModel GetOfferToEditForUser(int offerId, string username)
         {
             return _unitOfWork.Offers.GetOfferToEditForUser(username, offerId);
         }
 
+
+
         public void AddAvailableEquipmentToOffer(OfferFormViewModel offer)
         {
             offer.AvailableEquipment = _unitOfWork.Equipment.GetAvailableEquipmentNames();
         }
+
+
+
+
+        public void AddNewWatch(int offerId, string username)
+        {
+            _watchService.AddNewWatch(offerId, username);
+        }
+
 
 
 
@@ -73,18 +94,6 @@ namespace CarMat.Services
 
         private Offer createNewOfferFromModel(OfferFormViewModel model, CMUser user)
         {
-            Offer offer = createNewOfferFromModelWithoutVehicleEquipment(model, user);
-
-            if (model.VehicleEquipment != null)
-            {
-                addEquipmentToVehicle(model.VehicleEquipment, offer.Vehicle);
-            }
-
-            return offer;
-        }
-
-        private Offer createNewOfferFromModelWithoutVehicleEquipment(OfferFormViewModel model, CMUser user)
-        {
             return new Offer
             {
                 User = user,
@@ -93,34 +102,9 @@ namespace CarMat.Services
                 Description = model.Description,
                 Price = decimal.Parse(model.Price),
                 Title = model.Title,
-                Vehicle = new Vehicle
-                {
-                    EngineCapacity = model.EngineCapacity,
-                    isDamaged = model.isDamaged,
-                    isRegistered = model.isRegistered,
-                    Mileage = model.Mileage,
-                    Model = _unitOfWork.Models.GetVehicleModel(model.VehicleModel),
-                    ProductionYear = model.ProductionYear,
-                    VehicleVehicleEquipment = new List<VehicleVehicleEquipment>(),
-                }
+                Vehicle = _vehicleService.CreateNewVehicleFromModel(model),
             };
         }
-
-        private void addEquipmentToVehicle(List<string> equipmentNames, Vehicle vehicle)
-        {
-            List<VehicleEquipment> equipmentForVehicle = _unitOfWork.Equipment.GetEquipmentMatchGivenNames(equipmentNames);
-
-            foreach (var equipment in equipmentForVehicle)
-            {
-                vehicle.VehicleVehicleEquipment.Add(new VehicleVehicleEquipment
-                {
-                    Vehicle = vehicle,
-                    Equipment = equipment,
-                });
-            }
-
-        }
-
 
 
         public void UpdateOfferForUser(int offerId, string username, OfferFormViewModel model)
@@ -138,61 +122,10 @@ namespace CarMat.Services
 
         private void updateGivenOffer(OfferFormViewModel model, Offer offer)
         {
-            updateOfferWithoutEquipment(model, offer);
-
-            if (model.VehicleEquipment != null)
-            {
-                updateVehicleEquipment(model, offer);
-            }
-        }
-
-
-        private void updateOfferWithoutEquipment(OfferFormViewModel model, Offer offer)
-        {
             offer.Price = decimal.Parse(model.Price);
             offer.Title = model.Title;
-            offer.Vehicle.EngineCapacity = model.EngineCapacity;
-            offer.Vehicle.isDamaged = model.isDamaged;
-            offer.Vehicle.isRegistered = model.isRegistered;
-            offer.Vehicle.Mileage = model.Mileage;
-            offer.Vehicle.Model = _unitOfWork.Models.GetVehicleModel(model.VehicleModel);
-            offer.Vehicle.ProductionYear = model.ProductionYear;
-        }
 
-        private void updateVehicleEquipment(OfferFormViewModel model, Offer offer)
-        {
-            List<VehicleEquipment> equipmentForVehicle = _unitOfWork.Equipment.GetEquipmentMatchGivenNames(model.VehicleEquipment);
-
-            addNewEquipmentToExistingVehicle(offer.Vehicle, equipmentForVehicle);
-            removeEquipmentFromExistingVehicle(offer.Vehicle, equipmentForVehicle);
-        }
-
-        private void removeEquipmentFromExistingVehicle(Vehicle vehicle, List<VehicleEquipment> equipmentForVehicle)
-        {
-            foreach (var equipment in vehicle.VehicleVehicleEquipment.ToList())
-            {
-                if (!equipmentForVehicle.Any(e => e.Id == equipment.EquipmentId))
-                {
-                    _unitOfWork.Equipment.RemoveVehicleEquipmentFromVehicle(equipment, vehicle);
-                }
-            }
-        }
-
-        private void addNewEquipmentToExistingVehicle(Vehicle vehicle, List<VehicleEquipment> equipmentForVehicle)
-        {
-            foreach (var equipment in equipmentForVehicle)
-            {
-                if (!vehicle.VehicleVehicleEquipment.Any(ve => ve.EquipmentId == equipment.Id))
-                {
-                    var newEquipment = new VehicleVehicleEquipment
-                    {
-                        Vehicle = vehicle,
-                        Equipment = equipment,
-                    };
-
-                    _unitOfWork.Equipment.AddNewVehicleEquipmentToVehicle(newEquipment, vehicle);
-                }
-            }
+            _vehicleService.UpdateExistingOffersVehicle(model, offer);
         }
 
 

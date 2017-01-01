@@ -73,10 +73,12 @@ namespace CarMat.Repositories
                 .FirstOrDefault();
         }
 
-        public List<SimpleOfferViewModel> GetFutureOffers()
+        public List<SimpleOfferViewModel> GetFutureOffers(string username)
         {
             return _context.Offers
                 .Include(o => o.Vehicle)
+                .Include(o => o.User)
+                .Include(o => o.Watches)
                 .Where(o => o.DateFinished > DateTime.Today)
                 .Select(o => new SimpleOfferViewModel
                 {
@@ -85,7 +87,9 @@ namespace CarMat.Repositories
                     Mileage = o.Vehicle.Mileage,
                     Price = o.Price,
                     ProductionYear = o.Vehicle.ProductionYear,
-                    Title = o.Title
+                    Title = o.Title,
+                    IsWatched = o.Watches.Any(w => w.Watcher.UserName.Equals(username)),
+                    BelongsToCurrentUser = o.User.UserName.Equals(username)
                 })
                 .ToList();
         }
@@ -143,6 +147,13 @@ namespace CarMat.Repositories
                     .FirstOrDefault();
         }
 
+        public Offer GetOfferById(int offerId)
+        {
+            return _context.Offers
+                .Include(o => o.Watches)
+                .Where(o => o.Id == offerId)
+                .FirstOrDefault();
+        }
         
         public OfferFormViewModel GetOfferToEditForUser(string username, int offerId)
         {

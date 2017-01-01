@@ -5,5 +5,6 @@ namespace CarMat.Repositories
     public interface IUserRepository
     {
         CMUser GetUserIncludingHisOffers(string username);
+        CMUser GetUserByName(string username);
     }
 }

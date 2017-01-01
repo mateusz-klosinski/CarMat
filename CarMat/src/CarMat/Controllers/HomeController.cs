@@ -20,7 +20,9 @@ namespace CarMat.Controllers
         }
         public IActionResult Index()
         {
-            var offersWithVehicles = _unitOfWork.Offers.GetFutureOffers();
+            var username = User.Identity.Name;
+
+            var offersWithVehicles = _unitOfWork.Offers.GetFutureOffers(username);
 
             return View(offersWithVehicles);
         }

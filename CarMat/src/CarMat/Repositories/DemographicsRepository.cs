@@ -16,6 +16,12 @@ namespace CarMat.Repositories
             _context = context;
         }
 
+        public List<string> GetAllProvincesName()
+        {
+            return _context.Provinces
+                .Select(p => p.Name)
+                .ToList();
+        }
 
         public Demographics GetDemographicsByCityAndProvinceName(string city, string province)
         {
@@ -33,5 +39,7 @@ namespace CarMat.Repositories
                     .Equals(province, StringComparison.CurrentCultureIgnoreCase))
                     .FirstOrDefault();
         }
+
+
     }
 }
