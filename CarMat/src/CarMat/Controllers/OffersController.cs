@@ -16,18 +16,19 @@ namespace CarMat.Controllers
 {
     public class OffersController : Controller
     {
-        private IOfferService _service;
+        private IOfferService _offerService;
+        private INotificationService _notificationService;
 
-
-        public OffersController(IOfferService service)
+        public OffersController(IOfferService offerService, INotificationService notificationService)
         {
-            _service = service;
+            _offerService = offerService;
+            _notificationService = notificationService;
         }
 
         [Route("Offers/Details/{offerId}")]
         public IActionResult Details(int offerId)
         {
-            var offer = _service.GetOfferDetails(offerId);
+            var offer = _offerService.GetOfferDetails(offerId);
 
             if (offer != null)
             {
@@ -42,7 +43,7 @@ namespace CarMat.Controllers
         {
             var username = User.Identity.Name;
 
-            var offers = _service.GetOffersWhichBelongsToUser(username);
+            var offers = _offerService.GetOffersWhichBelongsToUser(username);
 
             return View(offers);
         }
@@ -52,15 +53,26 @@ namespace CarMat.Controllers
         {
             var username = User.Identity.Name;
 
-            var offers = _service.GetOffersWatchedByUser(username);
+            var offers = _offerService.GetOffersWatchedByUser(username);
 
             return View(offers);
         }
 
         [Authorize]
+        [HttpPost]
+        public IActionResult StopWatching(int offerId)
+        {
+            var username = User.Identity.Name;
+
+            _offerService.StopWatchingOffer(offerId, username);
+
+            return RedirectToAction("Watched");
+        }
+
+        [Authorize]
         public IActionResult Create()
         {
-            OfferFormViewModel offer = _service.CreateEmptyOfferWithAvailableEquipment();
+            OfferFormViewModel offer = _offerService.CreateEmptyOfferWithAvailableEquipment();
 
             return View(offer);
         }
@@ -73,13 +85,13 @@ namespace CarMat.Controllers
             {
                 var username = User.Identity.Name;
 
-                _service.CreateNewOffer(username, model);
+                _offerService.CreateNewOffer(username, model);
 
                 return RedirectToAction("Mine");
             }
             else
             {
-                _service.AddAvailableEquipmentToOffer(model);
+                _offerService.AddAvailableEquipmentToOffer(model);
                 return View(model);
             }
         }
@@ -90,8 +102,8 @@ namespace CarMat.Controllers
         {
             var username = User.Identity.Name;
 
-            var offerToEdit = _service.GetOfferToEditForUser(offerId, username);
-            _service.AddAvailableEquipmentToOffer(offerToEdit);
+            var offerToEdit = _offerService.GetOfferToEditForUser(offerId, username);
+            _offerService.AddAvailableEquipmentToOffer(offerToEdit);
 
             if (offerToEdit != null)
             {
@@ -110,7 +122,12 @@ namespace CarMat.Controllers
             {
                 var username = User.Identity.Name;
 
-                _service.UpdateOfferForUser(offerId, username, model);
+                var isUpdated = _offerService.UpdateOfferForUser(offerId, username, model);
+
+                if (isUpdated)
+                {
+                    _notificationService.CreateNotificationsForAllWatchers(offerId, NotificationType.OfferUpdated);
+                }
 
                 return RedirectToAction("Mine");
             }
@@ -125,7 +142,12 @@ namespace CarMat.Controllers
         {
             var username = User.Identity.Name;
 
-            _service.DeleteOfferForUser(offerId, username);
+            var isDeleted = _offerService.DeleteOfferForUser(offerId, username);
+
+            if (isDeleted)
+            {
+                _notificationService.CreateNotificationsForAllWatchers(offerId, NotificationType.OfferDeleted);
+            }
 
             return RedirectToAction("Mine");
         }

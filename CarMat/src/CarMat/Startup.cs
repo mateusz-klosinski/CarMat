@@ -54,6 +54,7 @@ namespace CarMat
             services.AddScoped<IWatchService, WatchService>();
             services.AddScoped<IOfferService, OfferService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<INotificationService, NotificationService>();
 
             services.AddIdentity<CMUser, IdentityRole>(config =>
             {

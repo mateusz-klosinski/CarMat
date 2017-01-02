@@ -151,6 +151,11 @@ namespace CarMat.Repositories
         {
             return _context.Offers
                 .Include(o => o.Watches)
+                .ThenInclude(w => w.Watcher)
+                .Include(o => o.User)
+                .Include(o => o.Vehicle)
+                .Include(o => o.Vehicle.Model)
+                .Include(o => o.Vehicle.Model.Brand)
                 .Where(o => o.Id == offerId)
                 .FirstOrDefault();
         }

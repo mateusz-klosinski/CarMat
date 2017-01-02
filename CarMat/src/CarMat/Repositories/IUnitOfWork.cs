@@ -11,6 +11,7 @@ namespace CarMat.Repositories
         IUserRepository Users { get; }
         IDemographicsRepository Demographics { get; }
         IWatchRepository Watches { get; }
+        INotificationRepository Notifications { get; }
 
         void Complete();
         Task CompleteAsync();

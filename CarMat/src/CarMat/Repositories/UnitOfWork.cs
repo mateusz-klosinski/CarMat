@@ -17,6 +17,7 @@ namespace CarMat.Repositories
         public IVehicleModelRepository Models { get; private set; }
         public IDemographicsRepository Demographics { get; private set; }
         public IWatchRepository Watches { get; private set; }
+        public INotificationRepository Notifications { get; private set; }
 
         public UnitOfWork(CMContext context)
         {
@@ -27,6 +28,7 @@ namespace CarMat.Repositories
             Models = new VehicleModelRepository(context);
             Demographics = new DemographicsRepository(context);
             Watches = new WatchRepository(context);
+            Notifications = new NotificationRepository(context);
         }
 
 

@@ -13,6 +13,8 @@ namespace CarMat.Models
 
         public ICollection<Watch> Watches { get; set; }
 
+        public ICollection<UserNotification> Notifications { get; set; }
+
         public int DemographicsId { get; set; }
 
         public Demographics Demographics { get; set; }

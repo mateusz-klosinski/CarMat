@@ -79,7 +79,10 @@ namespace CarMat.Services
             _watchService.AddNewWatch(offerId, username);
         }
 
-
+        public void StopWatchingOffer(int offerId, string username)
+        {
+            _watchService.RemoveWatch(offerId, username);
+        }
 
 
         public void CreateNewOffer(string username, OfferFormViewModel model)
@@ -107,7 +110,7 @@ namespace CarMat.Services
         }
 
 
-        public void UpdateOfferForUser(int offerId, string username, OfferFormViewModel model)
+        public bool UpdateOfferForUser(int offerId, string username, OfferFormViewModel model)
         {
             var offer = _unitOfWork.Offers.GetOfferForUser(offerId, username);
 
@@ -117,7 +120,9 @@ namespace CarMat.Services
 
                 _unitOfWork.Offers.UpdateOffer(offer);
                 _unitOfWork.Complete();
+                return true;
             }
+            return false;
         }
 
         private void updateGivenOffer(OfferFormViewModel model, Offer offer)
@@ -130,7 +135,7 @@ namespace CarMat.Services
         }
 
 
-        public void DeleteOfferForUser(int offerId, string username)
+        public bool DeleteOfferForUser(int offerId, string username)
         {
             var offer = _unitOfWork.Offers.GetOfferForUser(offerId, username);
 
@@ -138,7 +143,9 @@ namespace CarMat.Services
             {
                 _unitOfWork.Offers.DeleteOffer(offer);
                 _unitOfWork.Complete();
+                return true;
             }
+            return false;
         }
 
 

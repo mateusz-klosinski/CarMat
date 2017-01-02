@@ -24,6 +24,8 @@ namespace CarMat.Models
         public DbSet<VehicleEquipment> VehicleEquipments { get; set; }
         public DbSet<VehicleVehicleEquipment> VehicleVehicleEquipment { get; set; }
         public DbSet<Watch> Watches { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<UserNotification> UserNotification { get; set; }
 
 
 
