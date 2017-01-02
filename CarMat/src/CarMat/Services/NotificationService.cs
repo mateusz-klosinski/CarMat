@@ -18,6 +18,15 @@ namespace CarMat.Services
         }
 
 
+        public List<Notification> GetNotifications(string username)
+        {
+           return _unitOfWork.Notifications.GetNotificationsByUserName(username);
+        }
+
+
+
+
+
         public void CreateNotificationsForAllWatchers(int offerId, NotificationType type)
         {
             var offer = _unitOfWork.Offers.GetOfferById(offerId);
@@ -40,7 +49,6 @@ namespace CarMat.Services
 
             _unitOfWork.Complete();
         }
-
 
         private Notification createNotificationForType(Offer offer, NotificationType type)
         {

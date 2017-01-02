@@ -2,6 +2,8 @@
 
 (function () {
 
+    $(".notifications").popover();
+
     $(window).on("scroll", function () {
         if ($(document).scrollTop() > 50) {
             $('nav, .search-form').addClass("shrink");

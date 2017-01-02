@@ -98,6 +98,43 @@ footer .navbar{
     background-color: #f7f7f7;
 }
 
+/* notifications */
+
+.notifications{
+    position:absolute;
+    left: 50%;
+    top: 35px;
+    color: #4c6269;
+    transition: all 0.5s;
+}
+
+.notifications:focus{
+    outline: none;
+}
+
+.notifications:hover{
+    color: #0088b3;
+}
+
+
+@media (max-width: 1710px)
+{
+    .notifications{
+        left: 60%;
+    }
+}
+
+@media (max-width: 960px)
+{
+    .notifications{
+        left: 50%;
+    }
+}
+
+.navbar-default.shrink .notifications{
+    top: 7px;
+}
+
 
 /* search form */
 

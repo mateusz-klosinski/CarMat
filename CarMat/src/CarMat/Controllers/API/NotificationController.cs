@@ -1,5 +1,6 @@
 ﻿using CarMat.Repositories;
 using CarMat.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarMat.Controllers.API
 {
+    [Authorize]
     [Route("api/Notifications")]
     public class NotificationController : Controller
     {
@@ -17,6 +19,17 @@ namespace CarMat.Controllers.API
         public NotificationController(INotificationService service)
         {
             _service = service;
+        }
+
+
+        [HttpGet("GetNotifications")]
+        public IActionResult GetNotifications()
+        {
+            var username = User.Identity.Name;
+
+            var notifications = _service.GetNotifications(username);
+
+            return Ok(notifications);
         }
     }
 }
