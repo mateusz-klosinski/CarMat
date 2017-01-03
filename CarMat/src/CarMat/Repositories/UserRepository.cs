@@ -21,6 +21,7 @@ namespace CarMat.Repositories
         {
             return _context.Users
                 .Include(o => o.Watches)
+                .Include(o => o.Notifications)
                 .Where(u => u.UserName.Equals(username))
                 .FirstOrDefault();
         }

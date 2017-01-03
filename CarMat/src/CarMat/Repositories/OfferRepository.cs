@@ -79,7 +79,7 @@ namespace CarMat.Repositories
                 .Include(o => o.Vehicle)
                 .Include(o => o.User)
                 .Include(o => o.Watches)
-                .Where(o => o.DateFinished > DateTime.Today)
+                .Where(o => o.DateFinished >= DateTime.Today)
                 .Select(o => new SimpleOfferViewModel
                 {
                     EngineCapacity = o.Vehicle.EngineCapacity,

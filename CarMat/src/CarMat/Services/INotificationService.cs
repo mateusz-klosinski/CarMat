@@ -6,6 +6,7 @@ namespace CarMat.Services
     public interface INotificationService
     {
         void CreateNotificationsForAllWatchers(int offerId, NotificationType type);
-        List<Notification> GetNotifications(string username);
+        List<Notification> GetNotReadNotifications(string username);
+        void ReadUserNotifications(string username);
     }
 }

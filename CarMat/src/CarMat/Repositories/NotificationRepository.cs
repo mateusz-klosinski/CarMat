@@ -17,12 +17,12 @@ namespace CarMat.Repositories
             _context = context;
         }
 
-        public List<Notification> GetNotificationsByUserName(string username)
+        public List<Notification> GetNotReadNotificationsByUserName(string username)
         {
             return _context.UserNotification
                 .Include(un => un.Notification)
                 .Include(un => un.User)
-                .Where(un => un.User.UserName.Equals(username))
+                .Where(un => un.User.UserName.Equals(username) && un.IsRead == false)
                 .Select(un => un.Notification)
                 .ToList();
         }

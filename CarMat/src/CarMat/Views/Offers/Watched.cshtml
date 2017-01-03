@@ -27,7 +27,7 @@
                 <p>Przebieg: @offer.Mileage km, Rok: @offer.ProductionYear, Pojemność silnika: @offer.EngineCapacity cm<sup>3</sup></p>
                 <h3>@offer.Price.ToString("c")</h3>
                 <a asp-action="Details" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-info">Zobacz pełną ofertę</a>
-                <a asp-action="StopWatching" asp-controller="Offers" class="btn btn-danger">Przestań obserwować</a>
+                <a asp-action="StopWatch" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-danger">Przestań obserwować</a>
             </div>
         </div>
     }

@@ -59,8 +59,8 @@ namespace CarMat.Controllers
         }
 
         [Authorize]
-        [HttpPost]
-        public IActionResult StopWatching(int offerId)
+        [Route("Offers/StopWatch/{offerId}")]
+        public IActionResult StopWatch(int offerId)
         {
             var username = User.Identity.Name;
 
@@ -137,17 +137,28 @@ namespace CarMat.Controllers
 
 
         [Authorize]
+        [Route("Offers/Finish/{offerId}")]
+        public IActionResult Finish(int offerId)
+        {
+            var username = User.Identity.Name;
+
+            var isFinished = _offerService.FinishOfferForUser(offerId, username);
+
+            if (isFinished)
+            {
+                _notificationService.CreateNotificationsForAllWatchers(offerId, NotificationType.OfferDeleted);
+            }
+
+            return RedirectToAction("Mine");
+        }
+
+        [Authorize]
         [Route("Offers/Delete/{offerId}")]
         public IActionResult Delete(int offerId)
         {
             var username = User.Identity.Name;
 
-            var isDeleted = _offerService.DeleteOfferForUser(offerId, username);
-
-            if (isDeleted)
-            {
-                _notificationService.CreateNotificationsForAllWatchers(offerId, NotificationType.OfferDeleted);
-            }
+            _offerService.DeleteOfferForUser(offerId, username);
 
             return RedirectToAction("Mine");
         }

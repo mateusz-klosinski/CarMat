@@ -28,7 +28,14 @@
                 <h3>@offer.Price.ToString("c")</h3>
                 <a asp-action="Details" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-info">Zobacz pełną ofertę</a>
                 <a asp-action="Edit" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-success">Edytuj</a>
-                <a asp-action="Delete" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-danger">Usuń</a>
+                @if (offer.DateFinished >= DateTime.Today)
+                {
+                    <a asp-action="Finish" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-danger">Zakończ</a>
+                }
+                else
+                {
+                    <a asp-action="Delete" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-danger pull-right">Usuń całkowicie</a>
+                }
             </div>
         </div>
     }

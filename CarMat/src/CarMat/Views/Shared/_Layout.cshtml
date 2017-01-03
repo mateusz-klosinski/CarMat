@@ -33,14 +33,18 @@
                         <span>MOTORYZACYJNE</span>
                     </div>
                 </a>
-                <a tabindex="0" role="button" class="notifications"
-                   data-toggle="popover"
-                   data-trigger="focus"
-                   title="Powiadomienia"
-                   data-placement="bottom"
-                   data-content="Brak nowych powiadomień">
-                    <i class="fa fa-3x fa-globe"></i>
-                </a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a tabindex="0" role="button" class="notifications"
+                       data-toggle="popover"
+                       data-trigger="focus"
+                       title="Powiadomienia"
+                       data-placement="bottom">
+                        <i class="fa fa-3x fa-globe"></i>
+                        <span class="badge hidden"></span>
+                    </a>
+                }
+
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -103,7 +107,13 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/lib/FitText.js/jquery.fittext.js"></script>
+    <script src="~/lib/moment/moment.js"></script>
     <script src="~/js/site.js"></script>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script src="~/js/notification.js"></script>
+    }
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

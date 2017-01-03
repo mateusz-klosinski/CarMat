@@ -27,9 +27,20 @@ namespace CarMat.Controllers.API
         {
             var username = User.Identity.Name;
 
-            var notifications = _service.GetNotifications(username);
+            var notifications = _service.GetNotReadNotifications(username);
 
             return Ok(notifications);
+        }
+
+
+        [HttpPost("ReadNotifications")]
+        public IActionResult ReadNotifications()
+        {
+            var username = User.Identity.Name;
+
+            _service.ReadUserNotifications(username);
+
+            return Ok();
         }
     }
 }

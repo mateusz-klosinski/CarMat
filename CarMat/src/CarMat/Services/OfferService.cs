@@ -148,6 +148,20 @@ namespace CarMat.Services
             return false;
         }
 
+        public bool FinishOfferForUser(int offerId, string username)
+        {
+            var offer = _unitOfWork.Offers.GetOfferForUser(offerId, username);
+
+            if (offer != null)
+            {
+                offer.DateFinished = DateTime.Today - TimeSpan.FromDays(1);
+                _unitOfWork.Offers.UpdateOffer(offer);
+                _unitOfWork.Complete();
+                return true;
+            }
+            return false;
+        }
+
 
     }
 }

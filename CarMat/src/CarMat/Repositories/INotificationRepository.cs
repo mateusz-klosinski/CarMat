@@ -7,7 +7,7 @@ namespace CarMat.Repositories
     {
         void AddNewNotification(Notification notification);
         void AddNewNotificationToUser(UserNotification notification, CMUser user);
-        List<Notification> GetNotificationsByUserName(string username);
+        List<Notification> GetNotReadNotificationsByUserName(string username);
         void UpdateUserNotification(UserNotification notification);
     }
 }

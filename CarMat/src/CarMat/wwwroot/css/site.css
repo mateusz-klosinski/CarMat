@@ -103,7 +103,7 @@ footer .navbar{
 .notifications{
     position:absolute;
     left: 50%;
-    top: 35px;
+    top: 37px;
     color: #4c6269;
     transition: all 0.5s;
 }
@@ -114,6 +114,32 @@ footer .navbar{
 
 .notifications:hover{
     color: #0088b3;
+}
+
+.notifications .badge{
+    position: absolute;
+    top: -3px;
+    left: 20px;
+    background-color: #cc0606;
+    animation: UpAndDown 1s infinite;
+}
+
+@keyframes UpAndDown{
+    0%{
+        top: -3px
+    }
+    25%{
+        top: -7px
+    }
+    50%{
+        top: -5px;
+    }
+    75%{
+        top: -7px;
+    }
+    100%{
+        top: -3px;
+    }
 }
 
 
@@ -132,7 +158,28 @@ footer .navbar{
 }
 
 .navbar-default.shrink .notifications{
-    top: 7px;
+    top: 10px;
+}
+
+/* popover */
+
+.popover .popover-content ul{
+    list-style-type: none;
+    padding: 5px;
+}
+
+.popover .popover-content ul li{
+    border-bottom: 1px solid rgba(76, 98, 105, 0.2);
+    padding: 5px 0;
+}
+
+.popover .popover-content ul li:last-of-type{
+    border-bottom: none;
+}
+
+.popover .popover-content .notification-time{
+    font-weight: bold;
+    display:block;
 }
 
 

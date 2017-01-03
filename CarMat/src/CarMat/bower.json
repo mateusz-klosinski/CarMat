@@ -8,6 +8,7 @@
     "jquery-validation-unobtrusive": "3.2.6",
     "jquery-ui": "~1.12.1",
     "Font-Awesome": "~4.7.0",
-    "FitText.js": "~1.2.0"
+    "FitText.js": "~1.2.0",
+    "moment": "*"
   }
 }

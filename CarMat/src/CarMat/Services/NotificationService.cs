@@ -18,11 +18,10 @@ namespace CarMat.Services
         }
 
 
-        public List<Notification> GetNotifications(string username)
+        public List<Notification> GetNotReadNotifications(string username)
         {
-           return _unitOfWork.Notifications.GetNotificationsByUserName(username);
+           return _unitOfWork.Notifications.GetNotReadNotificationsByUserName(username);
         }
-
 
 
 
@@ -65,11 +64,25 @@ namespace CarMat.Services
             }
             else
             {
-                notification.Description += " została usunięta.";
+                notification.Description += " została zakończona.";
             }
 
 
             return notification;
+        }
+
+        public void ReadUserNotifications(string username)
+        {
+            var user = _unitOfWork.Users.GetUserByName(username);
+
+            foreach (var notification in user.Notifications)
+            {
+                notification.IsRead = true;
+                _unitOfWork.Notifications.UpdateUserNotification(notification);
+            }
+
+
+            _unitOfWork.Complete();
         }
     }
 }
