@@ -162,6 +162,12 @@ namespace CarMat.Services
             return false;
         }
 
-
+        public void IncrementViewCounter(int offerId)
+        {
+            var offer = _unitOfWork.Offers.GetOfferById(offerId);
+            offer.ViewCounter++;
+            _unitOfWork.Offers.UpdateOffer(offer);
+            _unitOfWork.Complete();
+        }
     }
 }

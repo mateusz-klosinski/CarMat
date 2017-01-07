@@ -1,0 +1,55 @@
+﻿@model List<CarMat.ViewModels.SimpleOfferViewModel>
+
+@{ 
+    ViewData["Title"] = "Szukaj";
+}
+
+<section>
+    <h1 class="page-header text-center">
+        <i class="fa fa-caret-right"></i> Wyniki wyszukiwania
+    </h1>
+</section>
+
+
+
+<section class="offers container-fluid">
+    @if (Model.Any())
+    {
+        @foreach (var offer in Model)
+        {
+            <div class="offer">
+                <div class="offer-photo">
+                    <img class="img-responsive" src="~/images/bmw.jpg" />
+                </div>
+                <div class="offer-description">
+                    <h1>@offer.Title</h1>
+                    <p>Przebieg: @offer.Mileage km, Rok: @offer.ProductionYear, Pojemność silnika: @offer.EngineCapacity cm<sup>3</sup></p>
+                    <h3>@offer.Price.ToString("c")</h3>
+                    <a asp-action="Details" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-info">Zobacz pełną ofertę</a>
+                    @if (User.Identity.IsAuthenticated && offer.BelongsToCurrentUser == false)
+                    {
+                        @if (offer.IsWatched)
+                        {
+                            <button class="btn btn-success js-watch" data-offerId="@offer.Id">Obserwujesz</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-default js-watch" data-offerId="@offer.Id">Obserwuj</button>
+                        }
+
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h4 class="text-center">Brak wyników spełniających wyszukiwane kryteria</h4>
+        <div class="text-center">
+            <a asp-action="Index" asp-controller="Home" class="btn btn-info"><i class="fa fa-rotate-left"></i> Wróć</a>
+        </div>
+    }
+
+</section>
+
+

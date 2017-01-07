@@ -69,6 +69,7 @@ namespace CarMat.Repositories
                     VehicleEquipment = o.Vehicle.VehicleVehicleEquipment
                         .Select(vve => vve.Equipment.Name)
                      .ToList(),
+                    ViewCounter = o.ViewCounter,
                 })
                 .FirstOrDefault();
         }
@@ -89,8 +90,10 @@ namespace CarMat.Repositories
                     ProductionYear = o.Vehicle.ProductionYear,
                     Title = o.Title,
                     IsWatched = o.Watches.Any(w => w.Watcher.UserName.Equals(username)),
-                    BelongsToCurrentUser = o.User.UserName.Equals(username)
+                    BelongsToCurrentUser = o.User.UserName.Equals(username),
+                    ViewCounter = o.ViewCounter,
                 })
+                .OrderByDescending(o => o.ViewCounter)
                 .ToList();
         }
 
@@ -192,6 +195,28 @@ namespace CarMat.Repositories
                 .FirstOrDefault();
         }
 
-
+        public List<SimpleOfferViewModel> GetFutureOffersThatContainsQuery(string username, string query)
+        {
+            return _context.Offers
+                .Include(o => o.Vehicle)
+                .Include(o => o.User)
+                .Include(o => o.Watches)
+                .Where(o => o.DateFinished >= DateTime.Today && 
+                (o.Title.Contains(query) || o.Vehicle.Model.Name.Contains(query) || o.Vehicle.Model.Brand.Name.Contains(query)))
+                .Select(o => new SimpleOfferViewModel
+                {
+                    EngineCapacity = o.Vehicle.EngineCapacity,
+                    Id = o.Id,
+                    Mileage = o.Vehicle.Mileage,
+                    Price = o.Price,
+                    ProductionYear = o.Vehicle.ProductionYear,
+                    Title = o.Title,
+                    IsWatched = o.Watches.Any(w => w.Watcher.UserName.Equals(username)),
+                    BelongsToCurrentUser = o.User.UserName.Equals(username),
+                    ViewCounter = o.ViewCounter,
+                })
+                .OrderByDescending(o => o.ViewCounter)
+                .ToList();
+        }
     }
 }

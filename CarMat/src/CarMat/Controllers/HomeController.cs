@@ -28,6 +28,20 @@ namespace CarMat.Controllers
         }
 
 
+        public IActionResult Search(string query)
+        {
+            var username = User.Identity.Name;
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                var offers = _unitOfWork.Offers.GetFutureOffersThatContainsQuery(username, query);
+                return View(offers);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
         public IActionResult Error()
         {
             return View();

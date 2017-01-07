@@ -21,5 +21,6 @@ namespace CarMat.ViewModels
         public bool IsWatched { get; set; }
         public bool BelongsToCurrentUser { get; set; }
 
+        public int ViewCounter { get; set; }
     }
 }

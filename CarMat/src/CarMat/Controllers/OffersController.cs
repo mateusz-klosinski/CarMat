@@ -29,6 +29,7 @@ namespace CarMat.Controllers
         public IActionResult Details(int offerId)
         {
             var offer = _offerService.GetOfferDetails(offerId);
+            _offerService.IncrementViewCounter(offerId);
 
             if (offer != null)
             {

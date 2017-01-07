@@ -20,6 +20,8 @@ namespace CarMat.Models
 
         public string Description { get; set; }
 
+        public int ViewCounter { get; set; } = 0;
+
         public ICollection<Watch> Watches { get; set; }
 
         public string UserId { get; set; }

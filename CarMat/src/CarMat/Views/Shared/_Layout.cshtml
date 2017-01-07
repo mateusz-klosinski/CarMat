@@ -82,9 +82,9 @@
         <div class="row">
             <div>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Znajdź swój nowy samochód...">
+                    <input type="text" class="form-control js-search-term" placeholder="Znajdź swój nowy samochód...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                        <a asp-action="Search" asp-controller="Home" class="btn btn-default js-search"><i class="fa fa-search"></i></a>
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
@@ -109,6 +109,7 @@
     <script src="~/lib/FitText.js/jquery.fittext.js"></script>
     <script src="~/lib/moment/moment.js"></script>
     <script src="~/js/site.js"></script>
+    <script src="~/js/search.js"></script>
     @if (User.Identity.IsAuthenticated)
     {
         <script src="~/js/notification.js"></script>

@@ -16,5 +16,6 @@ namespace CarMat.Repositories
         OfferFormViewModel GetOfferToEditForUser(string username, int offerId);
         void UpdateOffer(Offer offer);
         List<SimpleOfferViewModel> GetOffersWatchedByUser(string username);
+        List<SimpleOfferViewModel> GetFutureOffersThatContainsQuery(string username, string query);
     }
 }

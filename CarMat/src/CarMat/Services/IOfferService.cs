@@ -17,5 +17,6 @@ namespace CarMat.Services
         List<SimpleOfferViewModel> GetOffersWatchedByUser(string username);
         void AddNewWatch(int offerId, string username);
         void StopWatchingOffer(int offerId, string username);
+        void IncrementViewCounter(int offerId);
     }
 }
