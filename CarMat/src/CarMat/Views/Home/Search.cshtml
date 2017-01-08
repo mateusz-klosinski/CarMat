@@ -1,4 +1,4 @@
-﻿@model List<CarMat.ViewModels.SimpleOfferViewModel>
+﻿@model CarMat.ViewModels.OffersWithFiltersViewModel
 
 @{ 
     ViewData["Title"] = "Szukaj";
@@ -13,9 +13,9 @@
 
 
 <section class="offers container-fluid">
-    @if (Model.Any())
+    @if (Model.Offers.Any())
     {
-        @foreach (var offer in Model)
+        @foreach (var offer in Model.Offers)
         {
             <div class="offer">
                 <div class="offer-photo">

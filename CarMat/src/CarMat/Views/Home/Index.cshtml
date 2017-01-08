@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CarMat.ViewModels.SimpleOfferViewModel>
+﻿@model CarMat.ViewModels.OffersWithFiltersViewModel
 
     @{
         ViewData["Title"] = "Strona główna";
@@ -18,7 +18,7 @@
 
         <div class="row">
             <ul class="top-vehicles">
-                @foreach (var offer in Model.Take(4))
+                @foreach (var offer in Model.Offers.Take(4))
                 {
                     <li class="col-lg-3">
                         <img class="img-responsive" src="~/images/audi.jpg" />
@@ -43,61 +43,74 @@
         </h1>
 
         <div class="filter-form">
-            <h1 class="text-center"><i class="fa fa-filter"></i></h1>
+            <h1 class="text-center"><i class="fa fa-filter"></i> Filtry</h1>
 
-            <form>
+            <hr />
+
+            <form asp-action="Filter" asp-controller="Home" method="post">
                 <div class="form-group">
                     <label>Cena</label>
                     <div class="input-group">
                         Od:
-                        <input class="form-control" type="number" />
+                        <input asp-for="Filters.PriceFrom" class="form-control" type="number" />
                         Do:
-                        <input class="form-control" type="number" />
+                        <input asp-for="Filters.PriceTo" class="form-control" type="number" />
                     </div>
                 </div>
 
+                <hr />
 
                 <div class="form-group">
                     <label>Pojemność</label>
                     <div class="input-group">
                         Od:
-                        <input class="form-control" type="number" />
+                        <input asp-for="Filters.EngineCapacityFrom" class="form-control" type="number" />
                         Do:
-                        <input class="form-control" type="number" />
+                        <input asp-for="Filters.EngineCapacityTo" class="form-control" type="number" />
                     </div>
                 </div>
+
+                <hr />
 
                 <div class="form-group">
                     <label>Rok produkcji</label>
                     <div class="input-group">
                         Od:
-                        <input class="form-control" type="number" />
+                        <input asp-for="Filters.ProductionYearFrom" class="form-control" type="number" />
                         Do:
-                        <input class="form-control" type="number" />
+                        <input asp-for="Filters.ProductionYearTo" class="form-control" type="number" />
                     </div>
                 </div>
 
+                <hr />
 
                 <div class="form-group">
                     <label>Zarejestrowane w polsce</label>
-                    <input class="form-control" type="checkbox" />
+                    <input asp-for="Filters.IsRegistered" class="form-control" type="checkbox" />
                 </div>
 
+                <hr />
 
                 <div class="form-group">
                     <label>Uszkodzone</label>
-                    <input class="form-control" type="checkbox" />
+                    <input asp-for="Filters.IsDamaged" class="form-control" type="checkbox" />
                 </div>
+
+                <hr />
 
                 <div class="form-group">
                     <label>Marka</label>
-                    <input class="form-control" type="text" placeholder="Wpisz pierwszą literę i wybierz z listy..."/>
+                    <input asp-for="Filters.VehicleModel" class="form-control" type="text" placeholder="Wpisz pierwszą literę i wybierz z listy..."/>
                 </div>
+
+                <hr />
 
                 <div class="form-group">
                     <label>Model</label>
-                    <input class="form-control" type="text" placeholder="Wpisz pierwszą literę i wybierz z listy..." />
+                    <input asp-for="Filters.VehicleBrand" class="form-control" type="text" placeholder="Wpisz pierwszą literę i wybierz z listy..." />
                 </div>
+
+                <hr />
 
                 <div class="form-group">
                     <input type="submit" class="btn btn-info" value="Filtruj"/>
@@ -109,7 +122,7 @@
 
 
 <section class="offers container-fluid">
-    @foreach (var offer in Model.Skip(4))
+    @foreach (var offer in Model.Offers.Skip(4))
     {
         <div class="offer">
             <div class="offer-photo">

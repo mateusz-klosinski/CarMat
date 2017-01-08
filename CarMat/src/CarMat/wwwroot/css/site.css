@@ -379,7 +379,7 @@ footer .navbar{
 }
 
 .filters .page-header:hover i{
-    transform: rotate(180deg);
+    transform: translateX(-5px);
 }
 
 .filters h1{
@@ -392,9 +392,10 @@ footer .navbar{
     right: -500px;
     z-index: 2;
     padding: 10px;
-    box-shadow: 0px 1px 21px 2px rgba(0,0,0,0.28);
-    background-color: white;
+    background-color: rgb(222, 222, 222);
     transition: right 1s ease-in-out;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-right: none;
 }
 
 .filters .filter-form.active{

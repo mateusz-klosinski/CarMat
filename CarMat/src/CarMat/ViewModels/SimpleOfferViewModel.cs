@@ -16,7 +16,7 @@ namespace CarMat.ViewModels
         public int ProductionYear { get; set; }
         public int Mileage { get; set; }
         public int EngineCapacity { get; set; }
-        public DateTime DateFinished { get; set;}
+        public DateTime DateFinished { get; set; }
 
         public bool IsWatched { get; set; }
         public bool BelongsToCurrentUser { get; set; }
