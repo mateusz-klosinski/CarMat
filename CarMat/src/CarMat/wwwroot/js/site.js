@@ -2,6 +2,10 @@
 
 (function () {
 
+    $(".fa-print").on("click", function () {
+        window.print();
+    });
+
     $(window).on("scroll", function () {
         if ($(document).scrollTop() > 50) {
             $('nav, .search-form').addClass("shrink");

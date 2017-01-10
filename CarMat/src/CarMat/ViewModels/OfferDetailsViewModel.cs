@@ -32,6 +32,9 @@ namespace CarMat.ViewModels
         public string City { get; set; }
         public string Province { get; set; }
 
+
+        public bool IsWatched { get; set; }
+        public bool BelongsToCurrentUser { get; set; }
         public int ViewCounter { get; set; }
     }
 }

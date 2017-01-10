@@ -30,6 +30,7 @@ namespace CarMat.ViewModels
 
         [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Cena")]
+        [Range(0, 100000000, ErrorMessage = "Pole {0} musi być z zakresu od {1} zł do {2} zł")]
         public string Price { get; set; }
 
 

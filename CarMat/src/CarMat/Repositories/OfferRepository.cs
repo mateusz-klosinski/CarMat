@@ -43,7 +43,7 @@ namespace CarMat.Repositories
 
 
 
-        public OfferDetailsViewModel GetOfferDetails(int offerId)
+        public OfferDetailsViewModel GetOfferDetails(int offerId, string username)
         {
             return _context.Offers
                 .Include(o => o.Vehicle)
@@ -77,6 +77,9 @@ namespace CarMat.Repositories
                     VehicleEquipment = o.Vehicle.VehicleVehicleEquipment
                         .Select(vve => vve.Equipment.Name)
                      .ToList(),
+
+                    IsWatched = o.Watches.Any(w => w.Watcher.UserName.Equals(username)),
+                    BelongsToCurrentUser = o.User.UserName.Equals(username),
                     ViewCounter = o.ViewCounter,
                 })
                 .FirstOrDefault();

@@ -4,9 +4,14 @@
     ViewData["Title"] = Model.VehicleBrand + " " + Model.VehicleModel;
 }
 
+@section scripts{
+    <script src="~/js/watch.js"></script>
+}
+
 <section>
     <h1 class="page-header text-center">
-        <i class="fa fa-car"></i> @Model.Title <span class="pull-right"><i class=""></i></span>
+        <i class="fa fa-car"></i> @Model.Title
+        <span class="pull-right"><i class="fa fa-print hidden-xs"></i></span>
     </h1>
 </section>
 
@@ -44,13 +49,28 @@
 
 <section>
     <h1 class="page-header text-center">
-        <i class="fa fa-info-circle"></i>
+        @if (Model.BelongsToCurrentUser == false && User.Identity.IsAuthenticated)
+        {
+            @if (Model.IsWatched)
+            {
+                <button class="btn btn-lg btn-success js-watch" data-offerId="@Model.Id">Obserwujesz</button>
+            }
+            else
+            {
+                <button class="btn btn-lg btn-default js-watch" data-offerId="@Model.Id">Obserwuj</button>
+            }
+        }
+        else if (Model.BelongsToCurrentUser == true)
+        {
+            <label class="label label-default">Ogłoszenie należy do Ciebie</label>
+            <a class="btn btn-lg btn-success" asp-action="Edit" asp-controller="Offers" asp-route-offerId="@Model.Id">Edytuj</a>
+        }
     </h1>
 </section>
 
 <section class="details container-fluid">
     <div class="row">
-        <div class="col-md-2 col-md-offset-1 details-offer">
+        <div class="col-md-3 col-md-offset-1 details-offer">
             <h1>@Model.VehicleBrand @Model.VehicleModel</h1>
             <p>Cena: <b class="pull-right">@Model.Price.ToString("c")</b></p>
             <p>Rok produkcji: <b class="pull-right">@Model.ProductionYear</b></p>
@@ -60,7 +80,7 @@
             <p>Zarejestrowany w Polsce: <b class="pull-right">@( Model.isRegistered == true ? "TAK" : "NIE" )</b> </p>
         </div>
 
-        <div class="col-md-offset-4 col-md-4 details-user">
+        <div class="col-md-offset-3 col-md-4 details-user">
             <h1>Wystawione przez</h1>
             <p>@Model.UserName</p>
             <p>@Model.City, @Model.Province</p>

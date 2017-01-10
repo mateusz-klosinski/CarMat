@@ -25,9 +25,9 @@ namespace CarMat.Services
 
 
 
-        public OfferDetailsViewModel GetOfferDetails(int offerId)
+        public OfferDetailsViewModel GetOfferDetails(int offerId, string username)
         {
-            return _unitOfWork.Offers.GetOfferDetails(offerId);
+            return _unitOfWork.Offers.GetOfferDetails(offerId, username);
         }
 
 

@@ -8,7 +8,7 @@ namespace CarMat.Repositories
     {
         void CreateNewOfferForUser(CMUser user, Offer offer);
         void DeleteOffer(Offer offer);
-        OfferDetailsViewModel GetOfferDetails(int offerId);
+        OfferDetailsViewModel GetOfferDetails(int offerId, string username);
         List<SimpleOfferViewModel> GetFutureOffers(string username);
         Offer GetOfferForUser(int offerId, string username);
         Offer GetOfferById(int offerId);

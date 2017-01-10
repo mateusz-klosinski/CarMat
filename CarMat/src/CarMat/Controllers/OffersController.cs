@@ -28,7 +28,8 @@ namespace CarMat.Controllers
         [Route("Offers/Details/{offerId}")]
         public IActionResult Details(int offerId)
         {
-            var offer = _offerService.GetOfferDetails(offerId);
+            var username = User.Identity.Name;
+            var offer = _offerService.GetOfferDetails(offerId, username);
             _offerService.IncrementViewCounter(offerId);
 
             if (offer != null)

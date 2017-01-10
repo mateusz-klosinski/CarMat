@@ -78,7 +78,7 @@ namespace CarMat.Controllers
             };
 
 
-            return View(viewModel);
+            return View("Search", viewModel);
         }
 
  
