@@ -9,6 +9,7 @@ namespace CarMat.ViewModels
 {
     public class Filters
     {
+        public string Query { get; set; }
 
         public int PriceFrom { get; set; }
         public int PriceTo { get; set; }

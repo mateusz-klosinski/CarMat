@@ -7,6 +7,10 @@
     overflow-x: hidden;
 }
 
+.btn{
+    transition: all 0.5s;
+}
+
 /* Navbar and footer */
 
 .navbar{
@@ -368,9 +372,10 @@ footer .navbar{
 
 .filters{
     position: relative;
+    z-index: 2;
 }
 
-.filters .page-header:hover{
+.filters .page-header:hover, .filters-horizontal .page-header:hover{
     cursor: pointer;
 }
 
@@ -405,6 +410,61 @@ footer .navbar{
 .filters .filter-form input[type=number], .filters .filter-form input[type=text]{
     float: none;
 }
+
+
+/*filters horizontal*/
+
+.filters-horizontal{
+    position: relative;
+}
+
+
+.filters-horizontal.page-header:hover .filter-form{
+    color: #333;
+}
+
+.filters-horizontal .input-group .form-control {
+    width: auto;
+    float: none;
+}
+
+.filters-horizontal .form-group{
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
+
+.filters-horizontal .filter-form{
+    height: 0;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.filters-horizontal .filter-form.active{
+    height: 75px;
+    opacity: 1;
+}
+
+@media(max-width: 1414px)
+{
+    .filters-horizontal .filter-form.active{
+        height: 120px;
+    }
+}
+
+@media(max-width: 966px)
+{
+    .filters-horizontal .filter-form.active{
+        height: 160px;
+    }
+}
+
+@media(max-width:768px){
+    .filters-horizontal .filter-form.active{
+        height: 500px;
+    }
+}
+
+
 
 /* offers */
 

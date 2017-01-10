@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace CarMat.Services
 {
-    public class OfferService : IOfferService
+    public class OfferService
     {
         private IUnitOfWork _unitOfWork;
-        private IVehicleService _vehicleService;
-        private IWatchService _watchService;
+        private VehicleService _vehicleService;
+        private WatchService _watchService;
 
-        public OfferService(IUnitOfWork unitOfWork, IVehicleService vehicleService, IWatchService watchService)
+        public OfferService(IUnitOfWork unitOfWork, VehicleService vehicleService, WatchService watchService)
         {
             _unitOfWork = unitOfWork;
             _vehicleService = vehicleService;

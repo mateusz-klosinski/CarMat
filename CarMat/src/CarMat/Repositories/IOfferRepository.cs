@@ -17,5 +17,7 @@ namespace CarMat.Repositories
         void UpdateOffer(Offer offer);
         List<SimpleOfferViewModel> GetOffersWatchedByUser(string username);
         List<SimpleOfferViewModel> GetFutureOffersThatContainsQuery(string username, string query);
+        List<SimpleOfferViewModel> GetFilteredFutureOffersThatContainsQuery(string username, string query, Filters filters);
+        List<SimpleOfferViewModel> GetFilteredFutureOffers(string username, Filters filters);
     }
 }

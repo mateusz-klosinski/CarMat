@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarMat.Services
 {
-    public class NotificationService : INotificationService
+    public class NotificationService
     {
         private IUnitOfWork _unitOfWork;
 

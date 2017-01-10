@@ -6,7 +6,7 @@
 
 <section>
     <h1 class="page-header text-center">
-        <i class="fa fa-car"></i> @Model.Title
+        <i class="fa fa-car"></i> @Model.Title <span class="pull-right"><i class=""></i></span>
     </h1>
 </section>
 
@@ -65,7 +65,7 @@
             <p>@Model.UserName</p>
             <p>@Model.City, @Model.Province</p>
             <h1>Kontakt</h1>
-            <p>Email: @Model.Email</p>
+            <p>@Model.Email</p>
             <h6>Dodano: <b>@Model.DateAdded.Date.ToString("dd-MM-yyyy")</b></h6>
             <h6>Data zakończenia: <b>@Model.DateFinished.Date.ToString("dd-MM-yyyy")</b></h6>
         </div>

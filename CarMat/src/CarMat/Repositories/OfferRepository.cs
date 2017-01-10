@@ -14,10 +14,15 @@ namespace CarMat.Repositories
     {
         private CMContext _context;
 
+
+
         public OfferRepository(CMContext context)
         {
             _context = context;
         }
+
+
+
 
         public void CreateNewOfferForUser(CMUser user, Offer offer)
         {
@@ -34,6 +39,9 @@ namespace CarMat.Repositories
         {
             _context.Remove(offer);
         }
+
+
+
 
         public OfferDetailsViewModel GetOfferDetails(int offerId)
         {
@@ -74,6 +82,8 @@ namespace CarMat.Repositories
                 .FirstOrDefault();
         }
 
+
+
         public List<SimpleOfferViewModel> GetFutureOffers(string username)
         {
             return _context.Offers
@@ -97,6 +107,8 @@ namespace CarMat.Repositories
                 .ToList();
         }
 
+
+
         public List<SimpleOfferViewModel> GetOffersWhichBelongsToUser(string username)
         {
             return _context.Offers
@@ -116,6 +128,8 @@ namespace CarMat.Repositories
                 })
                 .ToList();
         }
+
+
 
         public List<SimpleOfferViewModel> GetOffersWatchedByUser(string username)
         {
@@ -140,6 +154,8 @@ namespace CarMat.Repositories
                 .ToList();
         }
 
+
+
         public Offer GetOfferForUser(int offerId, string username)
         {
             return _context.Offers
@@ -149,6 +165,8 @@ namespace CarMat.Repositories
                     .Where(o => o.Id == offerId && o.User.UserName.Equals(username))
                     .FirstOrDefault();
         }
+
+
 
         public Offer GetOfferById(int offerId)
         {
@@ -162,7 +180,9 @@ namespace CarMat.Repositories
                 .Where(o => o.Id == offerId)
                 .FirstOrDefault();
         }
-        
+
+
+
         public OfferFormViewModel GetOfferToEditForUser(string username, int offerId)
         {
             return _context.Offers
@@ -175,25 +195,28 @@ namespace CarMat.Repositories
                  .Equals(username) && o.Id == offerId)
                  .Select(o => new OfferFormViewModel
                  {
-                    Action = "Edit",
-                    Id = o.Id,
-                    DateFinished = o.DateFinished,
-                    Description = o.Description,
-                    Price = o.Price.ToString("0"),
-                    Title = o.Title,
-                    EngineCapacity = o.Vehicle.EngineCapacity,
-                    isDamaged = o.Vehicle.isDamaged,
-                    isRegistered = o.Vehicle.isRegistered,
-                    Mileage = o.Vehicle.Mileage,
-                    ProductionYear = o.Vehicle.ProductionYear,
-                    VehicleBrand = o.Vehicle.Model.Brand.Name,
-                    VehicleModel = o.Vehicle.Model.Name,
+                     Action = "Edit",
+                     Id = o.Id,
+                     DateFinished = o.DateFinished,
+                     Description = o.Description,
+                     Price = o.Price.ToString("0"),
+                     Title = o.Title,
+                     EngineCapacity = o.Vehicle.EngineCapacity,
+                     isDamaged = o.Vehicle.isDamaged,
+                     isRegistered = o.Vehicle.isRegistered,
+                     Mileage = o.Vehicle.Mileage,
+                     ProductionYear = o.Vehicle.ProductionYear,
+                     VehicleBrand = o.Vehicle.Model.Brand.Name,
+                     VehicleModel = o.Vehicle.Model.Name,
 
-                    VehicleEquipment = o.Vehicle.VehicleVehicleEquipment
+                     VehicleEquipment = o.Vehicle.VehicleVehicleEquipment
                         .Select(ve => ve.Equipment.Name).ToList(),
-                })
+                 })
                 .FirstOrDefault();
         }
+
+
+
 
         public List<SimpleOfferViewModel> GetFutureOffersThatContainsQuery(string username, string query)
         {
@@ -201,7 +224,7 @@ namespace CarMat.Repositories
                 .Include(o => o.Vehicle)
                 .Include(o => o.User)
                 .Include(o => o.Watches)
-                .Where(o => o.DateFinished >= DateTime.Today && 
+                .Where(o => o.DateFinished >= DateTime.Today &&
                 (o.Title.Contains(query) || o.Vehicle.Model.Name.Contains(query) || o.Vehicle.Model.Brand.Name.Contains(query)))
                 .Select(o => new SimpleOfferViewModel
                 {
@@ -217,6 +240,147 @@ namespace CarMat.Repositories
                 })
                 .OrderByDescending(o => o.ViewCounter)
                 .ToList();
+        }
+
+        public List<SimpleOfferViewModel> GetFilteredFutureOffersThatContainsQuery(string username, string query, Filters filters)
+        {
+            var offers = _context.Offers
+                .Include(o => o.Vehicle)
+                .Include(o => o.Vehicle.Model)
+                .Include(o => o.Vehicle.Model.Brand)
+                .Include(o => o.User)
+                .Include(o => o.Watches)
+                .ThenInclude(o => o.Watcher)
+                .Include(o => o.User)
+                .Where(o => o.DateFinished >= DateTime.Today &&
+                (o.Title.Contains(query) || o.Vehicle.Model.Name.Contains(query) || o.Vehicle.Model.Brand.Name.Contains(query)))
+                .ToList();
+
+            offers = filterOffers(offers, filters);
+
+            if (offers != null)
+            {
+                return offers
+                .Select(o => new SimpleOfferViewModel
+                {
+                    EngineCapacity = o.Vehicle.EngineCapacity,
+                    Id = o.Id,
+                    Mileage = o.Vehicle.Mileage,
+                    Price = o.Price,
+                    ProductionYear = o.Vehicle.ProductionYear,
+                    Title = o.Title,
+                    IsWatched = o.Watches.Any(w => w.Watcher.UserName.Equals(username)),
+                    BelongsToCurrentUser = o.User.UserName.Equals(username),
+                    ViewCounter = o.ViewCounter,
+                })
+                .ToList();
+            }
+            return new List<SimpleOfferViewModel>();
+        }
+
+        public List<SimpleOfferViewModel> GetFilteredFutureOffers(string username, Filters filters)
+        {
+            var offers = _context.Offers
+                .Include(o => o.Vehicle)
+                .Include(o => o.Vehicle.Model)
+                .Include(o => o.Vehicle.Model.Brand)
+                .Include(o => o.Watches)
+                .ThenInclude(o => o.Watcher)
+                .Include(o => o.User)
+                .Where(o => o.DateFinished >= DateTime.Today)
+                .ToList();
+
+
+            offers = filterOffers(offers, filters);
+
+            if (offers != null)
+            {
+                return offers
+                .Select(o => new SimpleOfferViewModel
+                {
+                    EngineCapacity = o.Vehicle.EngineCapacity,
+                    Id = o.Id,
+                    Mileage = o.Vehicle.Mileage,
+                    Price = o.Price,
+                    ProductionYear = o.Vehicle.ProductionYear,
+                    Title = o.Title,
+                    IsWatched = o.Watches.Any(w => w.Watcher.UserName.Equals(username)),
+                    BelongsToCurrentUser = o.User.UserName.Equals(username),
+                    ViewCounter = o.ViewCounter,
+                })
+                .ToList();
+            }
+            return new List<SimpleOfferViewModel>();
+
+        }
+
+        private List<Offer> filterOffers(List<Offer> offers, Filters filters)
+        {
+            if (filters != null)
+            {
+                if (filters.PriceFrom > 0)
+                {
+                    offers = offers
+                        .Where(o => o.Price > filters.PriceFrom)
+                        .ToList();
+                }
+                if (filters.PriceTo > 0)
+                {
+                    offers = offers
+                        .Where(o => o.Price < filters.PriceTo)
+                        .ToList();
+                }
+                if (filters.ProductionYearFrom > 0)
+                {
+                    offers = offers
+                        .Where(o => o.Vehicle.ProductionYear > filters.ProductionYearFrom)
+                        .ToList();
+                }
+                if (filters.ProductionYearTo > 0)
+                {
+                    offers = offers
+                        .Where(o => o.Vehicle.ProductionYear < filters.ProductionYearTo)
+                        .ToList();
+                }
+                if (filters.EngineCapacityFrom > 0)
+                {
+                    offers = offers
+                        .Where(o => o.Vehicle.EngineCapacity > filters.EngineCapacityFrom)
+                        .ToList();
+                }
+                if (filters.EngineCapacityTo > 0)
+                {
+                    offers = offers
+                        .Where(o => o.Vehicle.EngineCapacity < filters.EngineCapacityTo)
+                        .ToList();
+                }
+                if (!string.IsNullOrWhiteSpace(filters.VehicleModel))
+                {
+                    offers = offers
+                        .Where(o => o.Vehicle.Model.Name.Equals(filters.VehicleModel))
+                        .ToList();
+                }
+                if (!string.IsNullOrWhiteSpace(filters.VehicleBrand))
+                {
+                    offers = offers
+                        .Where(o => o.Vehicle.Model.Brand.Name.Equals(filters.VehicleBrand))
+                        .ToList();
+                }
+                if (filters.IsDamaged)
+                {
+                    offers = offers
+                        .Where(o => o.Vehicle.isDamaged)
+                        .ToList();
+                }
+                if(filters.IsRegistered)
+                {
+                    offers = offers
+                        .Where(o => o.Vehicle.isRegistered)
+                        .ToList();
+                }
+
+            }
+            return offers;
         }
     }
 }

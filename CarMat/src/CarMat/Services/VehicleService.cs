@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CarMat.Services
 {
-    public class VehicleService : IVehicleService
+    public class VehicleService
     {
         private IUnitOfWork _unitOfWork;
 

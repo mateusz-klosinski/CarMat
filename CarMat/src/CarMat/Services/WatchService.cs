@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarMat.Services
 {
-    public class WatchService : IWatchService
+    public class WatchService
     {
         private IUnitOfWork _unitOfWork;
 

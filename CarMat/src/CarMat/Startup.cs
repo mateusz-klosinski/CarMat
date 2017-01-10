@@ -50,11 +50,11 @@ namespace CarMat
             services.AddDbContext<CMContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddScoped<IVehicleService, VehicleService>();
-            services.AddScoped<IWatchService, WatchService>();
-            services.AddScoped<IOfferService, OfferService>();
+            services.AddScoped<VehicleService>();
+            services.AddScoped<WatchService>();
+            services.AddScoped<OfferService>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<NotificationService>();
 
             services.AddIdentity<CMUser, IdentityRole>(config =>
             {

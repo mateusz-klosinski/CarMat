@@ -45,7 +45,10 @@ namespace CarMat.Controllers
                 var model = new OffersWithFiltersViewModel
                 {
                     Offers = offers,
-                    Filters = new Filters(),
+                    Filters = new Filters
+                    {
+                        Query = query,
+                    }
                 };
 
                 return View(model);
@@ -54,30 +57,31 @@ namespace CarMat.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Filter(OffersWithFiltersViewModel model, string query = null)
+        public IActionResult Filter(OffersWithFiltersViewModel model)
         {
             var username = User.Identity.Name;
             List<SimpleOfferViewModel> offers;
 
-            if (!string.IsNullOrWhiteSpace(query))
+            if (!string.IsNullOrWhiteSpace(model.Filters.Query))
             {
-                offers = _unitOfWork.Offers.GetFutureOffersThatContainsQuery(username, query);
+                offers = _unitOfWork.Offers.GetFilteredFutureOffersThatContainsQuery(username, model.Filters.Query, model.Filters);
             }
             else
             {
-                offers = _unitOfWork.Offers.GetFutureOffers(username);
+                offers = _unitOfWork.Offers.GetFilteredFutureOffers(username, model.Filters);
             }
 
-            List<SimpleOfferViewModel> filteredOffers = filterOffers(offers, model.Filters);
+            var viewModel = new OffersWithFiltersViewModel
+            {
+                Offers = offers,
+                Filters = model.Filters,
+            };
 
-            return View();
+
+            return View(viewModel);
         }
 
-        private List<SimpleOfferViewModel> filterOffers(List<SimpleOfferViewModel> offers, Filters filters)
-        {
-            //TODO: IMPLEMENT IT!!!!!
-            return offers;
-        }
+ 
 
         public IActionResult Error()
         {

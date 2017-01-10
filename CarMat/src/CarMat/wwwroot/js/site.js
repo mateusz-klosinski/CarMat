@@ -11,11 +11,6 @@
         }
     });
 
-    $(".filters .page-header").on("click", function () {
-        $(".filters .filter-form").toggleClass("active");
-        $(".filters .page-header i").toggleClass("fa-caret-right").toggleClass("fa-caret-left");
-    });
-
     //fit text functions for most popular offers
     $(".top-vehicles li .bottom-description h2").each(function () {
         $(this).fitText(1.5);

@@ -67,7 +67,6 @@
                                 <li><a asp-action="Mine" asp-controller="Offers">Moje ogłoszenia</a></li>
                                 <li><a asp-action="Watched" asp-controller="Offers">Obserwowane ogłoszenia</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Ustawienia</a></li>
                                 <li><a asp-action="Logout" asp-controller="Auth">Wyloguj się</a></li>
                             </ul>
                         </li>
@@ -110,6 +109,7 @@
     <script src="~/lib/moment/moment.js"></script>
     <script src="~/js/site.js"></script>
     <script src="~/js/search.js"></script>
+    <script src="~/js/filters.js"></script>
     @if (User.Identity.IsAuthenticated)
     {
         <script src="~/js/notification.js"></script>

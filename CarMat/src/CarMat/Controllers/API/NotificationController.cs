@@ -14,9 +14,9 @@ namespace CarMat.Controllers.API
     [Route("api/Notifications")]
     public class NotificationController : Controller
     {
-        private INotificationService _service;
+        private NotificationService _service;
 
-        public NotificationController(INotificationService service)
+        public NotificationController(NotificationService service)
         {
             _service = service;
         }

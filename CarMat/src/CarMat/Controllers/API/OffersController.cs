@@ -15,9 +15,9 @@ namespace CarMat.Controllers.API
     public class OffersController : Controller
     {
         private IUnitOfWork _unitOfWork;
-        private IWatchService _watchService;
+        private WatchService _watchService;
 
-        public OffersController(IUnitOfWork unitOfWork, IWatchService watchService)
+        public OffersController(IUnitOfWork unitOfWork, WatchService watchService)
         {
             _unitOfWork = unitOfWork;
             _watchService = watchService;

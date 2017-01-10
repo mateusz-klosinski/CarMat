@@ -16,10 +16,10 @@ namespace CarMat.Controllers
 {
     public class OffersController : Controller
     {
-        private IOfferService _offerService;
-        private INotificationService _notificationService;
+        private OfferService _offerService;
+        private NotificationService _notificationService;
 
-        public OffersController(IOfferService offerService, INotificationService notificationService)
+        public OffersController(OfferService offerService, NotificationService notificationService)
         {
             _offerService = offerService;
             _notificationService = notificationService;

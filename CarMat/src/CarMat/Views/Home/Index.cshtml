@@ -4,9 +4,16 @@
         ViewData["Title"] = "Strona główna";
     }
 
+@section stylesheets{
+    <link rel="stylesheet" href="~/lib/jquery-ui/themes/base/jquery-ui.css" />
+}
+
 @section scripts
 {
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="~/js/modelBrandAutocomplete.js"></script>
     <script src="~/js/watch.js"></script>
+    <script src="~/js/modelBrandAutocomplete.js"></script>
 }
 
     <section class="most-popular container-fluid">
@@ -100,14 +107,14 @@
 
                 <div class="form-group">
                     <label>Marka</label>
-                    <input asp-for="Filters.VehicleModel" class="form-control" type="text" placeholder="Wpisz pierwszą literę i wybierz z listy..."/>
+                    <input asp-for="Filters.VehicleBrand" id="vehicle-brand" class="form-control" type="text" placeholder="Wpisz pierwszą literę i wybierz z listy..."/>
                 </div>
 
                 <hr />
 
                 <div class="form-group">
                     <label>Model</label>
-                    <input asp-for="Filters.VehicleBrand" class="form-control" type="text" placeholder="Wpisz pierwszą literę i wybierz z listy..." />
+                    <input asp-for="Filters.VehicleModel" id="vehicle-model" class="form-control" type="text" placeholder="Wpisz pierwszą literę i wybierz z listy..." />
                 </div>
 
                 <hr />
