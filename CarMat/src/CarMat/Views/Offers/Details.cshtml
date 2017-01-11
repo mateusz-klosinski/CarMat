@@ -53,11 +53,11 @@
         {
             @if (Model.IsWatched)
             {
-                <button class="btn btn-lg btn-success js-watch" data-offerId="@Model.Id">Obserwujesz</button>
+                <button class="btn btn-lg btn-success js-watch hidden-print" data-offerId="@Model.Id">Obserwujesz</button>
             }
             else
             {
-                <button class="btn btn-lg btn-default js-watch" data-offerId="@Model.Id">Obserwuj</button>
+                <button class="btn btn-lg btn-default js-watch hidden-print" data-offerId="@Model.Id">Obserwuj</button>
             }
         }
         else if (Model.BelongsToCurrentUser == true)

@@ -1,0 +1,44 @@
+﻿@media print{
+
+    body{
+        padding-top: 0;
+    }
+
+    a[href]:after{
+        content: none !important;
+    }
+
+    .navbar {
+        display: block;
+        border-width:0 !important;
+        position: static;
+    }
+    .navbar-toggle {
+        display:none;
+    }
+
+    .navbar .navbar-brand i{
+        opacity: 1;
+    }
+
+    .navbar .navbar-brand div{
+        position: absolute;
+        top: 0;
+        left: 110%;
+        transition: left 0.5s;
+    }
+
+    .offer:nth-of-type(2n+2){ 
+       page-break-after:left;
+       page-break-inside: auto;
+    }
+
+    .offer:last-of-type{
+        page-break-after: avoid;
+    }
+
+
+
+
+
+}

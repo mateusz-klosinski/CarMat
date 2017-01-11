@@ -592,7 +592,32 @@ footer .navbar{
 }
 
 @media (max-width: 991px){
-    .details, .details .details-user, .details .details-offer{
+    .details .details-user{
         text-align: center;
     }
+}
+
+/* statistics */
+.menu{
+    margin-top: 20px;
+}
+
+.menu ul{
+    list-style-type: none;
+    text-align: center;
+}
+
+.menu ul li{
+    padding: 5px 10px;    
+    background-color: rgb(222, 222, 222);
+    transition: background-color 0.5s;
+}
+
+.menu ul li:hover{
+    background-color: rgb(186, 186, 186);
+    transform: scale(1.05);
+}
+
+.menu ul li a, .page-header:hover .menu ul{
+    color: #333;
 }
