@@ -613,7 +613,7 @@ footer .navbar{
     transition: background-color 0.5s;
 }
 
-.menu ul li:hover{
+.menu ul li:hover, .menu ul li.active{
     background-color: rgb(186, 186, 186);
     transform: scale(1.05);
 }

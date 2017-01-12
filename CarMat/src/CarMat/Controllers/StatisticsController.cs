@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CarMat.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,21 @@ namespace CarMat.Controllers
 {
     public class StatisticsController : Controller
     {
+        private IUnitOfWork _unitOfWork;
+
+        public StatisticsController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         
         public IActionResult Index()
         {
-            return View();
+            var mostPopularOffers = _unitOfWork.Offers
+                .GetFutureOffers(string.Empty)
+                .Take(10)
+                .ToList();
+
+            return View(mostPopularOffers);
         }
     }
 }

@@ -1,18 +1,20 @@
-﻿@{ 
+﻿@model List<CarMat.ViewModels.SimpleOfferViewModel>
+
+@{ 
     ViewData["Title"] = "Statystyki";
 }
 
 <section class="page-header">
     <h1 class="text-center">
         <i class="fa fa-stack-exchange"></i> Statystyki
-        <span class="pull-right"><i class="fa fa-print"></i></span>
+        <span class="pull-right"><i class="fa fa-print hidden-print"></i></span>
     </h1>
 
-    <div class="menu">
+    <div class="menu hidden-print">
         <ul class="list-inline">
             <li><a class="btn btn-lg">Ilość ogłoszeń</a></li>
             <li><a class="btn btn-lg">Średnia cena</a></li>
-            <li><a class="btn btn-lg">Najpopularniejsze</a></li>
+            <li class="active"><a class="btn btn-lg">Najpopularniejsze</a></li>
             <li><a class="btn btn-lg">Archiwum</a></li>
             <li><a class="btn btn-lg">Użytkownicy</a></li>
         </ul>
@@ -21,6 +23,20 @@
 
 
 
-<section class="content">
-    <h1>Content</h1>
+<section class="content container-fluid">
+    @foreach (var offer in Model)
+    {
+        <div class="offer">
+            <div class="offer-photo">
+                <img class="img-responsive" src="~/images/bmw.jpg" />
+            </div>
+            <div class="offer-description">
+                <h1>@(Model.IndexOf(offer) + 1). @offer.Title</h1>
+                <h3>Wyświetleń: <b>@offer.ViewCounter</b></h3>
+                <p></p>
+                <p></p>
+                <a asp-action="Details" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-info hidden-print">Zobacz pełną ofertę</a>
+            </div>
+        </div>
+    }
 </section>
