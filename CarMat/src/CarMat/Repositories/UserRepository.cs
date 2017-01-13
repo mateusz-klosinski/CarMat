@@ -1,4 +1,5 @@
 ﻿using CarMat.Models;
+using CarMat.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,21 @@ namespace CarMat.Repositories
                     .Where(u => u.UserName
                     .Equals(username))
                     .FirstOrDefault();
+        }
+
+
+        public List<UserStatsViewModel> GetUsersOffersCount()
+        {
+            return _context.Users
+                .Include(u => u.Offers)
+                .Select(u => new UserStatsViewModel
+                {
+                    UserName = u.UserName,
+                    OfferCount = u.Offers.Count(),
+                })
+                .OrderByDescending(u => u.OfferCount)
+                .ThenBy(u => u.UserName)
+                .ToList();
         }
     }
 }

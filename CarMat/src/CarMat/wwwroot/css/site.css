@@ -11,6 +11,16 @@
     transition: all 0.5s;
 }
 
+.fa-print{
+    padding-right: 15px;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+.fa-print:hover{
+    transform: scale(1.05);
+}
+
 /* Navbar and footer */
 
 .navbar{

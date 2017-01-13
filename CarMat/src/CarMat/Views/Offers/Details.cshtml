@@ -62,8 +62,8 @@
         }
         else if (Model.BelongsToCurrentUser == true)
         {
-            <label class="label label-default">Ogłoszenie należy do Ciebie</label>
-            <a class="btn btn-lg btn-success" asp-action="Edit" asp-controller="Offers" asp-route-offerId="@Model.Id">Edytuj</a>
+            <label class="label label-default hidden-print">Ogłoszenie należy do Ciebie</label>
+            <a class="btn btn-lg btn-success hidden-print" asp-action="Edit" asp-controller="Offers" asp-route-offerId="@Model.Id">Edytuj</a>
         }
     </h1>
 </section>

@@ -86,11 +86,12 @@ namespace CarMat.Repositories
         }
 
 
-
         public List<SimpleOfferViewModel> GetFutureOffers(string username)
         {
             return _context.Offers
                 .Include(o => o.Vehicle)
+                .Include(o => o.Vehicle.Model)
+                .Include(o => o.Vehicle.Model.Brand)
                 .Include(o => o.User)
                 .Include(o => o.Watches)
                 .Where(o => o.DateFinished >= DateTime.Today)
@@ -384,6 +385,56 @@ namespace CarMat.Repositories
 
             }
             return offers;
+        }
+
+
+        public OffersCountViewModel GetOffersCountForActualMonth()
+        {
+            var offers = _context.Offers
+                .Include(o => o.Vehicle.Model.Brand)
+                .Where(o => o.DateAdded.Month == DateTime.Today.Month)
+                .ToList();
+
+            var brands = _context.VehicleBrands
+                .ToList();
+
+            List<BrandOffersCount> brandsWithOffersCount = new List<BrandOffersCount>();
+
+
+            brands.ForEach(b => 
+            {
+                brandsWithOffersCount.Add(new BrandOffersCount
+                {
+                    BrandName = b.Name,
+                    Count = offers.Where(o => o.Vehicle.Model.Brand == b).Count(),
+                });
+            });
+
+            return new OffersCountViewModel
+            {
+                CountAll = offers.Count(),
+                brandsWithOffersCount = brandsWithOffersCount
+                    .OrderByDescending(boc => boc.Count)
+                    .ThenBy(boc => boc.BrandName)
+                    .ToList(),
+            };
+        }
+
+        public List<SimpleOfferViewModel> GetFinishedOffers()
+        {
+          return _context.Offers
+                .Where(o => o.DateFinished < DateTime.Today)
+                .Select(o => new SimpleOfferViewModel
+                {
+                    EngineCapacity = o.Vehicle.EngineCapacity,
+                    Id = o.Id,
+                    Mileage = o.Vehicle.Mileage,
+                    Price = o.Price,
+                    ProductionYear = o.Vehicle.ProductionYear,
+                    Title = o.Title,
+                    ViewCounter = o.ViewCounter,
+                })
+                .ToList();
         }
     }
 }

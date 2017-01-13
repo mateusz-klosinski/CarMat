@@ -1,0 +1,35 @@
+﻿@model CarMat.ViewModels.OffersCountViewModel
+
+@{
+    ViewData["Title"] = "Statystyki";
+}
+
+<section class="page-header">
+    <h1 class="text-center">
+        <i class="fa fa-stack-exchange"></i> Statystyki
+        <span class="pull-right"><i class="fa fa-print hidden-print"></i></span>
+    </h1>
+
+    <div class="menu hidden-print">
+        <ul class="list-inline">
+            <li class="active"><a asp-action="CountOffers" asp-controller="Statistics" class="btn btn-lg">Ilość ogłoszeń</a></li>
+            <li><a asp-action="AverageBrandPrice" asp-controller="Statistics" class="btn btn-lg">Średnia cena</a></li>
+            <li><a asp-action="Index" asp-controller="Statistics" class="btn btn-lg">Najpopularniejsze</a></li>
+            <li><a asp-action="Archive" asp-controller="Statistics" class="btn btn-lg">Archiwum</a></li>
+            <li><a asp-action="UsersStats" asp-controller="Statistics" class="btn btn-lg">Użytkownicy</a></li>
+        </ul>
+    </div>
+</section>
+
+
+
+<section class="content container-fluid">
+    <h1>Ogólnie ogłoszeń w tym miesiącu: <b>@Model.CountAll</b></h1>
+    @foreach (var brand in Model.brandsWithOffersCount)
+    {
+        <div class="offer average-price">
+            <h2>@brand.BrandName</h2>
+            <h5>Ogłoszeń w tym miesiącu: <b>@brand.Count</b></h5>
+        </div>
+    }
+</section>

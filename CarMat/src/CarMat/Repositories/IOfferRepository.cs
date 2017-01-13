@@ -19,5 +19,7 @@ namespace CarMat.Repositories
         List<SimpleOfferViewModel> GetFutureOffersThatContainsQuery(string username, string query);
         List<SimpleOfferViewModel> GetFilteredFutureOffersThatContainsQuery(string username, string query, Filters filters);
         List<SimpleOfferViewModel> GetFilteredFutureOffers(string username, Filters filters);
+        OffersCountViewModel GetOffersCountForActualMonth();
+        List<SimpleOfferViewModel> GetFinishedOffers();
     }
 }

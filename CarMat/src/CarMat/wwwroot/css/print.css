@@ -28,17 +28,35 @@
         transition: left 0.5s;
     }
 
-    .offer:nth-of-type(2n+2){ 
+
+    .offer:nth-of-type(3n+2){ 
        page-break-after:left;
        page-break-inside: auto;
     }
 
+    
     .offer:last-of-type{
         page-break-after: avoid;
     }
 
+    .offer.average-price:nth-of-type(3n+2){
+       page-break-after: avoid;
+       page-break-inside: avoid;
+    }
+
+    .offer.average-price:nth-of-type(10n+7){
+       page-break-after: always;
+       page-break-inside: auto;
+    }
+
+    .offer.average-price:last-of-type{
+        page-break-after: avoid;
+    }
 
 
+    .details .details-offer{
+        page-break-after: always;
+    }
 
 
 }

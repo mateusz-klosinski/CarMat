@@ -1,4 +1,5 @@
 ﻿using CarMat.Repositories;
+using CarMat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,36 @@ namespace CarMat.Controllers
                 .ToList();
 
             return View(mostPopularOffers);
+        }
+
+
+        public IActionResult AverageBrandPrice()
+        {
+            var model = _unitOfWork.Models.GetAverageBrandPrices();
+
+            return View(model);
+        }
+
+        public IActionResult CountOffers()
+        {
+            var model = _unitOfWork.Offers.GetOffersCountForActualMonth();
+
+            return View(model);
+        }
+
+        public IActionResult Archive()
+        {
+            var model = _unitOfWork.Offers.GetFinishedOffers();
+
+            return View(model);
+        }
+
+
+        public IActionResult UsersStats()
+        {
+           var model = _unitOfWork.Users.GetUsersOffersCount();
+
+            return View(model);
         }
     }
 }

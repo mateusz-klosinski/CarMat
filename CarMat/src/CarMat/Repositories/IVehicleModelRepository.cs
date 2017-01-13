@@ -1,4 +1,5 @@
 ﻿using CarMat.Models;
+using CarMat.ViewModels;
 using System.Collections.Generic;
 
 namespace CarMat.Repositories
@@ -9,5 +10,6 @@ namespace CarMat.Repositories
         List<string> GetAllVehicleBrandNames();
         VehicleBrand GetBrandByName(string brandName);
         List<string> GetVehicleModelNames(int brandId);
+        List<AverageBrandPriceViewModel> GetAverageBrandPrices();
     }
 }
