@@ -4,6 +4,10 @@
     ViewData["Title"] = "Moje ogłoszenia";
 }
 
+@section scripts{
+    <script src="~/js/mine.js"></script>
+}
+
 <section>
     <h1 class="page-header text-center">
         <i class="fa fa-gavel"></i> Moje ogłoszenia
@@ -29,14 +33,65 @@
                 <a asp-action="Details" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-info">Zobacz pełną ofertę</a>
                 <a asp-action="Edit" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-success">Edytuj</a>
                 @if (offer.DateFinished >= DateTime.Today)
-                {
-                    <a asp-action="Finish" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-danger">Zakończ</a>
+                {                    
+                    <button class="btn btn-danger js-finish-offer"
+                            data-offerid="@offer.Id"
+                            data-toggle="modal"
+                            data-target="#finish-modal">
+                        Zakończ
+                    </button>
                 }
                 else
-                {
-                    <a asp-action="Delete" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-danger pull-right">Usuń całkowicie</a>
+                {                    
+                    <button class="btn btn-danger js-delete-offer"
+                            data-offerid="@offer.Id"
+                            data-toggle="modal"
+                            data-target="#delete-modal">
+                        <i class="fa fa-warning"></i> Usuń całkowicie
+                    </button>
                 }
             </div>
         </div>
     }
+
 </section>
+
+
+<!-- Finish Modal -->
+<div class="modal fade" id="finish-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Czy na pewno chcesz zakończyć ofertę?</h4>
+            </div>
+            <div class="modal-body">
+                Po zakończeniu oferty będziesz mógł ją wznowić lub usunąć całkowicie.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                <a asp-action="Finish" asp-controller="Offers" class="btn btn-danger">Zakończ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Czy na pewno chcesz usunąć ofertę?</h4>
+            </div>
+            <div class="modal-body">
+                Nie będziesz mógł cofnąć tej operacji.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                <a asp-action="Delete" asp-controller="Offers" class="btn btn-danger"><i class="fa fa-warning"></i> Usuń całkowicie</a>
+            </div>
+        </div>
+    </div>
+</div>

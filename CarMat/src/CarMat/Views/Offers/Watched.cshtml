@@ -11,24 +11,35 @@
 </section>
 
 <section class="offers container-fluid">
-    @foreach (var offer in Model)
+    @if (Model.Any())
     {
-        <div class="offer">
-            <div class="offer-photo">
-                <img class="img-responsive" src="~/images/bmw.jpg" />
-                @if (offer.DateFinished < DateTime.Today)
-                {
-                    <h2 class="text-danger offer-end-label">ZAKOŃCZONO!</h2>
-                }
+        @foreach (var offer in Model)
+        {
+            <div class="offer">
+                <div class="offer-photo">
+                    <img class="img-responsive" src="~/images/bmw.jpg" />
+                    @if (offer.DateFinished < DateTime.Today)
+                    {
+                        <h2 class="text-danger offer-end-label">ZAKOŃCZONO!</h2>
+                    }
 
+                </div>
+                <div class="offer-description">
+                    <h1>@offer.Title</h1>
+                    <p>Przebieg: @offer.Mileage km, Rok: @offer.ProductionYear, Pojemność silnika: @offer.EngineCapacity cm<sup>3</sup></p>
+                    <h3>@offer.Price.ToString("c")</h3>
+                    <a asp-action="Details" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-info">Zobacz pełną ofertę</a>
+                    <a asp-action="StopWatch" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-danger">Przestań obserwować</a>
+                </div>
             </div>
-            <div class="offer-description">
-                <h1>@offer.Title</h1>
-                <p>Przebieg: @offer.Mileage km, Rok: @offer.ProductionYear, Pojemność silnika: @offer.EngineCapacity cm<sup>3</sup></p>
-                <h3>@offer.Price.ToString("c")</h3>
-                <a asp-action="Details" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-info">Zobacz pełną ofertę</a>
-                <a asp-action="StopWatch" asp-controller="Offers" asp-route-offerId="@offer.Id" class="btn btn-danger">Przestań obserwować</a>
-            </div>
+        }
+    }
+    else
+    {
+        <div class="text-center">
+            <h3>Nie obserwujesz aktualnie żadnych ogłoszeń.</h3>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-info"><i class="fa fa-rotate-left"></i> Wróć</a>
         </div>
     }
+
 </section>

@@ -25,8 +25,14 @@ namespace CarMat.ViewModels
         [Display(Name = "Hasło")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Pole {0} jest wymagane do rejestracji")]
+        [StringLength(100, MinimumLength = 5 , ErrorMessage ="Hasło musi mieć przynajmniej 5 znaków długosci")]
+        [Display(Name = "Powtórz hasło")]
+        public string RepeatPassword { get; set; }
+
         [Display(Name = "Miasto")]
         [Required(ErrorMessage = "Pole {0} jest wymagane do rejestracji")]
+        [LettersOnly]
         public string City { get; set; }
 
         [Display(Name ="Województwo")]

@@ -17,10 +17,6 @@
     transition: transform 0.5s;
 }
 
-.fa-print:hover{
-    transform: scale(1.05);
-}
-
 /* Navbar and footer */
 
 .navbar{

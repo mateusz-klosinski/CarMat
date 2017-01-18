@@ -1,4 +1,6 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="js/filters.js" />
+/// <reference path="js/mine.js" />
 /// <reference path="js/modelbrandautocomplete.js" />
 /// <reference path="js/notification.js" />
 /// <reference path="js/register.js" />

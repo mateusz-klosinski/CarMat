@@ -53,9 +53,17 @@ namespace CarMat.Services
 
             CMUser newUser = createNewUser(model, userDemographics);
 
-            var creationResult = await _userManager.CreateAsync(newUser, model.Password);
+            if (model.Password.Equals(model.RepeatPassword))
+            {
+                var creationResult = await _userManager.CreateAsync(newUser, model.Password);
+                return creationResult;
+            }
 
-            return creationResult;
+            return IdentityResult
+                .Failed(new IdentityError[]
+                {
+                new IdentityError { Description = "Podane hasła różnią się" },
+                });
         }
 
 
