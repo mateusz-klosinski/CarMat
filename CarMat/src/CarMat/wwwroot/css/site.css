@@ -424,6 +424,10 @@ footer .navbar{
     position: relative;
 }
 
+.page-header.filters-horizontal:hover{
+    cursor: pointer;
+}
+
 
 .filters-horizontal.page-header:hover .filter-form{
     color: #333;
